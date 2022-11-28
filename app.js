@@ -13,6 +13,10 @@ app.use(express.json());
 app.use(appRouter);
 app.use("/Images", express.static("./Images"));
 
+app.get('/', (req,res)=>{
+  res.send({result: success})
+})
+
 app.use("*", (req, res, next) => {
   const err = new Error("Route Not Found");
   err.statusCode = 404;
