@@ -10,7 +10,7 @@ require("dotenv").config();
 
 app.use(cors());
 app.use(express.json());
-app.use(appRouter);
+// app.use(appRouter);
 app.use("/Images", express.static("./Images"));
 
 app.get('/', (req,res)=>{
@@ -38,10 +38,10 @@ app.use(async (err, req, res, next) => {
   });
 });
 
-db.sequelize.sync();
-db.sequelize
-  .authenticate()
-  .then(() => console.log("Database Connected".black.bgWhite));
+// db.sequelize.sync();
+// db.sequelize
+//   .authenticate()
+//   .then(() => console.log("Database Connected".black.bgWhite));
 
 app.listen(port, () => {
   console.log(`server listening on port ${port}`.rainbow);
