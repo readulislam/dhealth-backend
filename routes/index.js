@@ -1,5 +1,7 @@
 const express = require('express');
 const citiesRoutes = require('./cities.routes');
+const departmentsRoute = require('./departments.routes');
+const doctorsRoute = require('./doctors.routes');
 const hospitalRoute = require('./hospitals.routes');
 const patientsRoute = require('./patients.routes');
 const statesRoute = require('./states.routes');
@@ -10,6 +12,8 @@ appRouter.use(hospitalRoute);
 appRouter.use(statesRoute);
 appRouter.use(citiesRoutes);
 appRouter.use(patientsRoute);
+appRouter.use(departmentsRoute);
+appRouter.use(doctorsRoute);
 
 
 module.exports = appRouter;
