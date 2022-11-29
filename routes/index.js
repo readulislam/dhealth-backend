@@ -8,11 +8,11 @@ const statesRoute = require('./states.routes');
 const appRouter = express.Router()
 
 
-// appRouter.use(hospitalRoute);
-// appRouter.use(statesRoute);
-// appRouter.use(citiesRoutes);
-// appRouter.use(patientsRoute);
-// appRouter.use(doctorsRoute);
+appRouter.use(hospitalRoute);
+appRouter.use(statesRoute);
+appRouter.use(citiesRoutes);
+appRouter.use(patientsRoute);
+appRouter.use(doctorsRoute);
 appRouter.use(departmentsRoute);
 
 
