@@ -38,10 +38,10 @@ app.use(async (err, req, res, next) => {
   });
 });
 
-db.sequelize.sync();
-db.sequelize
-  .authenticate()
-  .then(() => console.log("Database Connected".black.bgWhite));
+// db.sequelize.sync();
+// db.sequelize
+//   .authenticate()
+//   .then(() => console.log("Database Connected".black.bgWhite));
 
 app.listen(port, () => {
   console.log(`server listening on port ${port}`.rainbow);
