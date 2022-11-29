@@ -1,7 +1,7 @@
 const express = require('express');
 
 const departmentsRoute = require('./departments.routes');
-const doctorsRoute = require('./doctors.routes');
+// const doctorsRoute = require('./doctors.routes');
 const hospitalRoute = require('./hospitals.routes');
 
 const statesRoute = require('./states.routes');
@@ -12,7 +12,7 @@ appRouter.use(hospitalRoute);
 appRouter.use(statesRoute);
 // appRouter.use(citiesRoutes);
 // appRouter.use(patientsRoute);
-appRouter.use(doctorsRoute);
+// appRouter.use(doctorsRoute);
 appRouter.use(departmentsRoute);
 
 
