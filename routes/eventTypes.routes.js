@@ -3,8 +3,8 @@ const { createEvent, getEvents } = require('../controller/eventTypes.controller'
 const eventsRoute = express.Router();
 
 
-eventsRoute.post('/add-event', createEvent)
-eventsRoute.get('/get-events', getEvents)
+eventsRoute.post('/add-eventType', createEvent)
+eventsRoute.get('/get-eventTypes', getEvents)
 
 
 
