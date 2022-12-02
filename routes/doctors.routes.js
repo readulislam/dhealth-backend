@@ -1,10 +1,10 @@
 const express = require('express');
-const { upload, createDoctor, getDoctors } = require('../controller/doctors.controller');
+const { createDoctor, getDoctors } = require('../controller/doctors.controller');
 const doctorsRoute = express.Router();
 
 
 
-doctorsRoute.post('/add-doctor', upload.single('img'), createDoctor)
+doctorsRoute.post('/add-doctor', createDoctor)
 doctorsRoute.get('/get-doctors',  getDoctors)
 
 

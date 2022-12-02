@@ -4,10 +4,10 @@ const {Doctors} = require('../database')
 exports.createDoctor = async(req,res) =>{
 
 try {
-    const doctor = await  Doctors.create({...req.body, img:''})
+    const doctor = await  Doctors.create({...req.body,})
     res.status(200).json(doctor)
 } catch (error) {
-    console.log(error)
+    res.status(500).json({type:error.name, massage:error.massage})
 }
 }
 exports.getDoctors = async(req,res) =>{

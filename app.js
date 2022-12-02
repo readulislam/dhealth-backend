@@ -11,7 +11,7 @@ require("dotenv").config();
 app.use(cors());
 app.use(express.json());
 app.use(appRouter);
-app.use("/Images", express.static("./Images"));
+// app.use("/Images", express.static("./Images"));
 
 app.get('/', (req,res)=>{
   res.send({result: 'success'})
