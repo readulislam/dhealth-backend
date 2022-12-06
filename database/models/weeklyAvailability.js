@@ -48,5 +48,5 @@ references:{
     modelName: 'WeeklyAvailability',
     tableName:'weeklyAvailability'
   });
-  return WeeklyAvailabilities;
+  return WeeklyAvailability;
 };
