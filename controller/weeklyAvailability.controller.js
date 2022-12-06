@@ -23,14 +23,25 @@ exports.getAvailabilityBydDate = async (req, res) => {
     const isAvailable = await DateOverride.findOne({
       where: { date, doctorId },
     });
-    console.log(isAvailable)
+   res.json(isAvailable);
     if (isAvailable) {
       const updateValue = {};
       updateValue[day] = "Unavailable";
       const updateAvailability = await WeeklyAvailability.update(updateValue, {
         where: { doctorId },
       });
-      console.log(updateAvailability)
+      res.json(updateAvailability)
     }
   } catch (error) {}
 };
+
+
+exports.getAvailabilityByDoctorId= async (req, res) => {
+    const {doctorId} = req.query
+    try {
+        const availability = await WeeklyAvailability.findOne({where:{doctorId}})
+        res.send(200).json(availability)
+    } catch (error) {
+        
+    }
+}
