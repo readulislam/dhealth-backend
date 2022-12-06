@@ -3,7 +3,7 @@ const { createOneTime } = require('../controller/weeklyAvailability.controller')
 const weeklyAvailabilityRoute = express.Router()
 
 
-weeklyAvailabilityRoute.post('/weeklyAvailability', createOneTime)
+weeklyAvailabilityRoute.post('/add-weeklyAvailability', createOneTime)
 
 
 module.exports=weeklyAvailabilityRoute;
