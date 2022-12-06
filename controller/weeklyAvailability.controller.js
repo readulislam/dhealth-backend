@@ -28,7 +28,8 @@ exports.getAvailabilityBydDate = async (req, res) => {
      const updateAvailability = await WeeklyAvailability.findOne( {
        where: { doctorId },
      });
-     res.status(200).json({data:updateAvailability})
+     return res.status(200).json({data:updateAvailability})
+
    }
 
 res.status(200).json({data:'Unavailable'})
