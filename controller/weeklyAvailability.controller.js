@@ -11,27 +11,27 @@ exports.createOneTime = async (req, res) => {
 exports.getAvailabilityBydDate = async (req, res) => {
   const { date, doctorId } = req.query;
   //date format
- 
-
-  var dateParts = date.split("/");
-
-  var dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
-
-  const splitting = dateObject.toString().split(" ");
+  const dateParts = date.split("/");
+  const dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+  const splitting = dateObject.toString()?.split(" ");
   const day = (splitting[0] + "day").toLowerCase();
+ 
   try {
     const isAvailable = await DateOverride.findOne({
       where: { date, doctorId },
     });
-   res.json(isAvailable);
-    if (isAvailable) {
-      const updateValue = {};
-      updateValue[day] = "Unavailable";
-      const updateAvailability = await WeeklyAvailability.update(updateValue, {
-        where: { doctorId },
-      });
-      res.json(updateAvailability)
-    }
+  
+
+   if (isAvailable) {
+     const updateValue = {};
+     updateValue[day] = "Unavailable";
+     const updateAvailability = await WeeklyAvailability.update(updateValue, {
+       where: { doctorId },
+     });
+     res.json(updateAvailability)
+   }
+
+
   } catch (error) {}
 };
 
