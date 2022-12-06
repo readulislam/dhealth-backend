@@ -4,7 +4,7 @@ const weeklyAvailabilityRoute = express.Router()
 
 
 weeklyAvailabilityRoute.post('/add-weeklyAvailability', createOneTime)
-weeklyAvailabilityRoute.get('/get-weeklyAvailability', getAvailabilityBydDate)
+
 weeklyAvailabilityRoute.put('/update-weeklyAvailability', getAvailabilityBydDate)
 weeklyAvailabilityRoute.get('/get-weeklyAvailability', getAvailabilityByDoctorId)
 
