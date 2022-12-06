@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class WeeklyAvailabilities extends Model {
+  class WeeklyAvailability extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,13 +13,13 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  WeeklyAvailabilities.init({
+  WeeklyAvailability.init({
     eventTypeId:{
       type: DataTypes.INTEGER,
       field: 'eventType_id',
       references:{
         model:{
-          tableName:'eventTypes'
+          tableName:'eventType'
         },
         key:'id'
       }
@@ -33,18 +33,20 @@ references:{
   }
 }
     },
-    Monday: DataTypes.JSONB,
-    Tuesday: DataTypes.JSONB,
-    Wednesday: DataTypes.JSONB,
-    Thursday: DataTypes.JSONB,
-    Friday: DataTypes.JSONB,
-    Saturday: DataTypes.JSONB,
-    Sunday: DataTypes.JSONB,
+    monday: DataTypes.STRING,
+    tuesday: DataTypes.STRING,
+    wednesday: DataTypes.STRING,
+    thursday: DataTypes.STRING,
+    friday: DataTypes.STRING,
+    saturday: DataTypes.STRING,
+    sunday: DataTypes.STRING,
+    startDate: DataTypes.STRING,
+    endDate: DataTypes.STRING,
    
   }, {
     sequelize,
-    modelName: 'WeeklyAvailabilities',
-    tableName:'weeklyAvailabilities'
+    modelName: 'WeeklyAvailability',
+    tableName:'weeklyAvailability'
   });
   return WeeklyAvailabilities;
 };

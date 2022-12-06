@@ -10,6 +10,7 @@ const hospitalRoute = require('./hospitals.routes');
 
 const statesRoute = require('./states.routes');
 const eventsRoute = require('./eventTypes.routes');
+const dataOverrideRoute = require('./dateOverride.routes');
 
 const appRouter = express.Router()
 
@@ -21,6 +22,7 @@ appRouter.use(patientsRoute);
 appRouter.use(doctorsRoute);
 appRouter.use(departmentsRoute);
 appRouter.use(eventsRoute);
+appRouter.use(dataOverrideRoute);
 // appRouter.use(weeklyAvailabilitiesRoute);
 
 
