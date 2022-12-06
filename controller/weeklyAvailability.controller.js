@@ -28,11 +28,13 @@ exports.getAvailabilityBydDate = async (req, res) => {
      const updateAvailability = await WeeklyAvailability.findOne( {
        where: { doctorId },
      });
-     return res.status(200).json({data:updateAvailability})
+    res.status(200).json({data:updateAvailability})
 
+   }else{
+    res.status(200).json({data:'Unavailable'})
    }
 
-res.status(200).json({data:'Unavailable'})
+
   } catch (error) {
     res.status(500).json({ type: error.name, massage: error.massage });
   }
