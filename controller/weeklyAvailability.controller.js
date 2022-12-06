@@ -24,7 +24,7 @@ exports.getAvailabilityBydDate = async (req, res) => {
 
    if (isAvailable) {
      const updateValue = {};
-     updateValue[day] = "Unavailable";
+     updateValue[day] = "9.00am-5.00pm";
      const updateAvailability = await WeeklyAvailability.update(updateValue, {
        where: { doctorId },
      });
