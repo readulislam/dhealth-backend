@@ -16,6 +16,17 @@ module.exports = (sequelize, DataTypes) => {
   EventTypes.init({
     name: DataTypes.STRING,
     duration: DataTypes.STRING,
+    doctorId:{
+      type: DataTypes.INTEGER,
+      field:'doctor_id',
+
+      references:{
+        model:{
+          tableName:'doctors'
+        },
+        key:'id'
+      }
+    }
    
   }, {
     sequelize,
