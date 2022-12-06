@@ -40,7 +40,7 @@ exports.getAvailabilityByDoctorId= async (req, res) => {
     const {doctorId} = req.query
     try {
         const availability = await WeeklyAvailability.findOne({where:{doctorId}})
-        res.send(200).json(availability)
+        res.status(200).json(availability)
     } catch (error) {
         
     }
