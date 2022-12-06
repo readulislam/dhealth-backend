@@ -22,17 +22,19 @@ exports.getAvailabilityBydDate = async (req, res) => {
     });
   
 
-   if (isAvailable) {
-     const updateValue = {};
-     updateValue[day] = "9.00am-5.00pm";
-     const updateAvailability = await WeeklyAvailability.update(updateValue, {
+   if (!isAvailable) {
+    //  const updateValue = {};
+    //  updateValue[day] = "9.00am-5.00pm";
+     const updateAvailability = await WeeklyAvailability.findOne( {
        where: { doctorId },
      });
-     res.json(updateAvailability)
+     res.status(200).json({data:updateAvailability})
    }
 
-
-  } catch (error) {}
+res.status(200).json({data:'Unavailable'})
+  } catch (error) {
+    res.status(500).json({ type: error.name, massage: error.massage });
+  }
 };
 
 
@@ -42,6 +44,6 @@ exports.getAvailabilityByDoctorId= async (req, res) => {
         const availability = await WeeklyAvailability.findOne({where:{doctorId}})
         res.status(200).json(availability)
     } catch (error) {
-        
+        res.status(500).json({ type: error.name, massage: error.massage });
     }
 }
