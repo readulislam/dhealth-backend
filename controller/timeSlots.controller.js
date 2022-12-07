@@ -50,52 +50,54 @@ console.log(properDay)
   if(timeRange === 'Unavailable'){
     res.status(200).json({data:'Unavailable'})
    
-  }
-  const [startTime, endTime] = timeRange?.split('-');
+  }else{
+    const [startTime, endTime] = timeRange?.split('-');
  
 
 
   
   
-  const useTimeSlots = (start, end) => {
-    var startTime = moment(start, "HH:mm");
-    var endTime = moment(end, "HH:mm");
-
-    if (endTime.isBefore(startTime)) {
-      endTime.add(1, "day");
-    }
-
-    var timeStops = [];
-    var id = 1;
-    while (startTime <= endTime) {
-      const timeObj = {
-        id,
-        time: new moment(startTime).format("HH:mm"),
-        isAvailable: false,
-      };
-      timeStops.push(timeObj);
-      startTime.add(15, "minutes");
-      id++;
-    }
-    return timeStops;
-  };
-  const s = useTimeSlots(startTime, endTime);
+    const useTimeSlots = (start, end) => {
+      var startTime = moment(start, "HH:mm");
+      var endTime = moment(end, "HH:mm");
   
-  const find = await TimeSlots.findOne({
-    where: { weekday: properDay, timeRange },
-  });
-  console.log(find);
-  if (find) {
-    res.status(200).json(find);
-
-  } else {
-    const r = await TimeSlots.create({
-      slots: slots.toString(),
-      timeRange,
-      weekday: properDay,
+      if (endTime.isBefore(startTime)) {
+        endTime.add(1, "day");
+      }
+  
+      var timeStops = [];
+      var id = 1;
+      while (startTime <= endTime) {
+        const timeObj = {
+          id,
+          time: new moment(startTime).format("HH:mm"),
+          isAvailable: false,
+        };
+        timeStops.push(timeObj);
+        startTime.add(15, "minutes");
+        id++;
+      }
+      return timeStops;
+    };
+    const slots = useTimeSlots(startTime, endTime);
+    
+    const find = await TimeSlots.findOne({
+      where: { weekday: properDay, timeRange },
     });
-    res.status(200).json({ data: r });
+   
+    if (find) {
+      res.status(200).json(find);
+  
+    }else {
+      const data = await TimeSlots.create({
+        slots: slots.toString(),
+        timeRange,
+        weekday: properDay,
+      });
+      res.status(200).json({ data});
+    }
   }
+ 
 
  }else{
   res.status(200).json({data:'Unavailable'})
