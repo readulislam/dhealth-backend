@@ -12,11 +12,12 @@ const statesRoute = require('./states.routes');
 const eventsRoute = require('./eventTypes.routes');
 const dataOverrideRoute = require('./dateOverride.routes');
 const weeklyAvailabilityRoute = require('./weeklyAvailability.routes');
-const { getTimeSlots } = require('../controller/timeSlots.controller');
+
+const slotsRoute = require('./timeSlots.routes');
 
 const appRouter = express.Router()
 
-appRouter.get('/get-time', getTimeSlots)
+appRouter.use(slotsRoute)
 appRouter.use(hospitalRoute);
 appRouter.use(statesRoute);
 appRouter.use(citiesRoutes);
