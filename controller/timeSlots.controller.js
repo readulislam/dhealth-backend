@@ -39,8 +39,8 @@ console.log(isAvailable)
     //   console.log(timeRange)
     //   const [startTime, endTime] = availability[day]?.split('-');
     //   console.log(startTime, endTime)
-    //   const slots =  useTimeSlots('9.00', '12.00', interval)
-    //   console.log(slots,'slots')
+      const slots =  useTimeSlots('9.00', '12.00', interval)
+      console.log(slots,'slots')
     // res.send({data:true})
        
         // const r = await TimeSlots.create({
@@ -54,7 +54,7 @@ console.log(isAvailable)
         // }else{
         //     res.status(200).json(time_slots)
         // }
-      res.status(200).send({data:true})
+      res.status(200).json({data:true})
      
   } catch (error) {
     res.status(500).json({ type: error.name, massage: error.massage });
