@@ -20,7 +20,8 @@ exports.getTimeSlots = async (req, res) => {
       const availability = await WeeklyAvailability.findOne({
         where: { doctorId },
       });
-      console.log(availability[day])
+      console.log(day)
+      console.log(availability)
       console.log('1')
       if (!availability[day]==='Unavailable') {
         console.log('1')
