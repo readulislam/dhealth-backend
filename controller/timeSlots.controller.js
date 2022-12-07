@@ -1,5 +1,5 @@
 const { DateOverride, WeeklyAvailability,TimeSlots } = require("../database");
-
+const moment = require('moment');
 const useTimeSlots = require("../hooks/useTimeSlots");
 
 exports.getTimeSlots = async (req, res) => {
@@ -39,8 +39,31 @@ console.log(isAvailable)
     //   console.log(timeRange)
     //   const [startTime, endTime] = availability[day]?.split('-');
     //   console.log(startTime, endTime)
-      const slots = await useTimeSlots('9.00', '12.00')
-      console.log(slots,'slots')
+    const useTimeSlots=(start, end)=>{
+      var startTime = moment(start, 'HH:mm');
+      var endTime = moment(end, 'HH:mm');
+      
+      if( endTime.isBefore(startTime) ){
+        endTime.add(1, 'day');
+      }
+    
+      var timeStops = [];
+     var id = 1
+      while(startTime <= endTime){
+          const timeObj={
+              id,
+              time:new moment(startTime).format('HH:mm'),
+              isAvailable:false,
+  
+          }
+      timeStops.push(timeObj);
+        startTime.add(15, 'minutes');
+        id++;
+      }
+      return timeStops;
+    }
+    const s = useTimeSlots('9.00','12.00')
+    console.log(s)
     // res.send({data:true})
        
         // const r = await TimeSlots.create({
