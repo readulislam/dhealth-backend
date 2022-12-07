@@ -7,8 +7,10 @@ exports.getTimeSlots = async (req, res) => {
   //date format
   const dateParts = date.split("/");
   const dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+  console.log(dateObject);
   const splitting = dateObject.toString()?.split(" ");
   const day = splitting[0].toLowerCase();
+  console.log(day, splitting)
   let properDay = "";
   switch (day) {
     case "mon":
