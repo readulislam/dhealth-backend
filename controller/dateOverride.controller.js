@@ -18,6 +18,15 @@ exports.getDateOverrideByDate = async(req,res) =>{
         res.status(500).json({type:error.name, massage:error.massage})
     }
 }
+exports.dropDateOverride = async(req,res) =>{
+    const {doctorId} = req.query
+    try {
+        const dropped = await DateOverride.destroy({where:{doctorId}}) 
+        res.status(200).json(dropped)
+    } catch (error) {
+        res.status(500).json({type:error.name, massage:error.massage})
+    }
+}
 
 
  

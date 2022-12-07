@@ -17,3 +17,12 @@ exports.getEvents = async(req,res) =>{
         res.status(500).json({type:error.name, massage:error.massage});
     }
 }
+exports.dropEventType = async(req,res) =>{
+    const {doctorId} = req.query;
+    try {
+        const dropped = await  EventType.destroy({where:{doctorId}});
+        res.status(200).json(dropped);
+    } catch (error) {
+        res.status(500).json({type:error.name, massage:error.massage});
+    }
+}
