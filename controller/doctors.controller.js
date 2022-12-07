@@ -19,6 +19,15 @@ try {
     console.log(error)
 }
 }
+exports.dropDoctor = async(req,res) =>{
+const {id} = req.query
+try {
+    const doctors = await  Doctors.destroy({where:{id}})
+    res.status(200).json(doctors)
+} catch (error) {
+    console.log(error)
+}
+}
 
 
 
