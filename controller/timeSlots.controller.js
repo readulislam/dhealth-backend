@@ -37,7 +37,7 @@ exports.getTimeSlots = async (req, res) => {
     default:
       break;
   }
-
+console.log(properDay)
   try {
     const isAvailable = await DateOverride.findOne({
       where: { date, doctorId },
@@ -49,7 +49,7 @@ exports.getTimeSlots = async (req, res) => {
   const timeRange = availability.dataValues[properDay];
   if(timeRange === 'Unavailable'){
     res.status(200).json({data:'Unavailable'})
-    return;
+   
   }
   const [startTime, endTime] = timeRange?.split('-');
  
@@ -87,6 +87,7 @@ exports.getTimeSlots = async (req, res) => {
   console.log(find);
   if (find) {
     res.status(200).json(find);
+
   } else {
     const r = await TimeSlots.create({
       slots: slots.toString(),
