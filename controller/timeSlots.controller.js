@@ -69,7 +69,7 @@ console.log(properDay)
         const timeObj = {
           id,
           time: new moment(startTime).format("HH:mm"),
-          isAvailable: false,
+          isAvailable: true,
         };
         timeStops.push(timeObj);
         startTime.add(15, "minutes");
