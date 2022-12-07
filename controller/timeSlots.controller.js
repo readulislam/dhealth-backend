@@ -90,7 +90,7 @@ console.log(properDay)
         timeRange,
         weekday: properDay,
       });
-      res.status(200).json({ data});
+      res.status(200).json( data);
     }
   }
 }else{
