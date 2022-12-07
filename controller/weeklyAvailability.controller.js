@@ -65,6 +65,7 @@ exports.AllAvailability = async(req,res) =>{
   const {doctorId} = req.query
 try {
   const dropped = await WeeklyAvailability.findAll({where:{doctorId}})
+  res.status(200).json(dropped)
 } catch (error) {
   
 }
