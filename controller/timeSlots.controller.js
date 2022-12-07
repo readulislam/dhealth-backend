@@ -62,22 +62,22 @@ console.log(isAvailable)
       }
       return timeStops;
     }
-    const s = useTimeSlots('9.00','12.00')
+    const s = useTimeSlots('9.00','17.00')
     console.log(s)
     // res.send({data:true})
        
-        // const r = await TimeSlots.create({
-        //     slots:slots.toString(),
-        //     timeRange,
-        //     weekday:properDay
-        // })
+        const r = await TimeSlots.create({
+            slots:slots.toString(),
+            timeRange,
+            weekday:properDay
+        })
   
         // if(created) {
         //     res.status(200).json(created)
         // }else{
         //     res.status(200).json(time_slots)
         // }
-      res.status(200).json({data:true})
+      res.status(200).json({data:r})
      
   } catch (error) {
     res.status(500).json({ type: error.name, massage: error.massage });
