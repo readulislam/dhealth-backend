@@ -90,7 +90,7 @@ console.log(properDay)
   
     }else {
       const data = await TimeSlots.create({
-        slots: slots.toString(),
+        slots: (slots),
         timeRange,
         weekday: properDay,
       });
