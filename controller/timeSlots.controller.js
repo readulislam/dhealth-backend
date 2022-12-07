@@ -43,9 +43,9 @@ exports.getTimeSlots = async (req, res) => {
         const slots =  useTimeSlots(startTime, endTime, interval)
         console.log(slots,'slots')
         const r = await TimeSlots.create({
-            slots:{'slots':`${slots}`},
+            slots:slots.toString(),
             timeRange,
-            weekday:day
+            weekday:properDay
         })
     res.send(r)
         // if(created) {
