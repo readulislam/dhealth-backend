@@ -39,7 +39,7 @@ console.log(isAvailable)
     //   console.log(timeRange)
     //   const [startTime, endTime] = availability[day]?.split('-');
     //   console.log(startTime, endTime)
-      const slots =  useTimeSlots('9.00', '12.00', interval)
+      const slots = await useTimeSlots('9.00', '12.00')
       console.log(slots,'slots')
     // res.send({data:true})
        
