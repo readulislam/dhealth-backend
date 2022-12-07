@@ -47,7 +47,7 @@ exports.getTimeSlots = async (req, res) => {
         //     timeRange,
         //     weekday:properDay
         // })
-    res.send(slots)
+    res.send({success:slots})
         // if(created) {
         //     res.status(200).json(created)
         // }else{
