@@ -32,11 +32,11 @@ console.log(isAvailable)
       });
       console.log(availability)
      
-      const timeRange=(availability.dataValues[properDay])
+    //   const timeRange=(availability.dataValues[properDay])
       
-      const interval = 15
+    //   const interval = 15
      
-      console.log(timeRange)
+    //   console.log(timeRange)
     //   const [startTime, endTime] = availability[day]?.split('-');
     //   console.log(startTime, endTime)
     const useTimeSlots=(start, end)=>{
@@ -64,20 +64,26 @@ console.log(isAvailable)
     }
     const s = useTimeSlots('9.00','17.00')
     console.log(s)
-
     // res.send({data:true})
-       
-        const [u,created] = await TimeSlots.findOrCreate({
-          where:{ weekday:properDay,timeRange,slots:s.toString(),},
-            
-           
-        })
+       const find = await TimeSlots.findOne({where:{weekday:properDay, timeRange}})
+       if(find){
+        res.status(200).json(find)
+       }else{
+        const r = await TimeSlots.create({
+          slots:slots.toString(),
+          timeRange,
+          weekday:properDay
+
+      })
+      res.status(200).json({data:r})
+       }
+        
   
-        if(created) {
-            res.status(200).json(created)
-        }else{
-            res.status(200).json(time_slots)
-        }
+        // if(created) {
+        //     res.status(200).json(created)
+        // }else{
+        //     res.status(200).json(time_slots)
+        // }
      
      
   } catch (error) {
