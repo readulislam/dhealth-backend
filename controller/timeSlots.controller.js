@@ -8,7 +8,17 @@ exports.getTimeSlots = async (req, res) => {
   const dateParts = date.split("/");
   const dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
   const splitting = dateObject.toString()?.split(" ");
-  const day = (splitting[0] + "day").toLowerCase();
+  const day = (splitting[0]).toLowerCase();
+    const properDay = ''
+  switch (day) {
+    case 'tue':
+        properDay='tuesday'
+        break;
+  
+    default:
+        break;
+  }
+
   try {
     const isAvailable = await DateOverride.findOne({
       where: { date, doctorId },
@@ -21,7 +31,7 @@ exports.getTimeSlots = async (req, res) => {
         where: { doctorId },
       });
       console.log(day)
-      console.log(availability.dataValues[day])
+      console.log(availability.dataValues[properDay])
       console.log('1')
       if (!availability[day]==='Unavailable') {
         console.log('1')
