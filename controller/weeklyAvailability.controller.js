@@ -50,3 +50,23 @@ exports.getAvailabilityByDoctorId= async (req, res) => {
         res.status(500).json({ type: error.name, massage: error.massage });
     }
 }
+
+exports.dropAvailability = async(req,res) =>{
+  const {doctorId} = req.query
+try {
+  const dropped = await WeeklyAvailability.destroy({where:{doctorId}})
+  res.status(200).json(dropped)
+} catch (error) {
+  
+}
+
+}
+exports.AllAvailability = async(req,res) =>{
+  const {doctorId} = req.query
+try {
+  const dropped = await WeeklyAvailability.findAll({where:{doctorId}})
+} catch (error) {
+  
+}
+
+}

@@ -1,6 +1,6 @@
 const { DateOverride, WeeklyAvailability, TimeSlots } = require("../database");
 const moment = require("moment");
-const useTimeSlots = require("../hooks/useTimeSlots");
+
 
 exports.getTimeSlots = async (req, res) => {
   const { date, doctorId } = req.query;
@@ -52,11 +52,7 @@ console.log(properDay)
    
   }else{
     const [startTime, endTime] = timeRange?.split('-');
- 
-
-
-  
-  
+    
     const useTimeSlots = (start, end) => {
       var startTime = moment(start, "HH:mm");
       var endTime = moment(end, "HH:mm");
@@ -80,11 +76,9 @@ console.log(properDay)
       return timeStops;
     };
     const slots = useTimeSlots(startTime, endTime);
-    
     const find = await TimeSlots.findOne({
       where: { weekday: properDay, timeRange },
     });
-   
     if (find) {
       res.status(200).json(find);
   
@@ -97,15 +91,41 @@ console.log(properDay)
       res.status(200).json({ data});
     }
   }
- 
+}else{
+ res.status(200).json({data:'Unavailable'})
+}
+} catch (error) {
+  res.status(500).json({ type: error.name, massage: error.massage });
+}
+};
 
- }else{
-  res.status(200).json({data:'Unavailable'})
- }
 
-   
-    
+
+
+ exports.getAllslots = async(req,res)=>{
+  try {
+    const slots = await TimeSlots.findAll();
+    res.status(200).json(slots)
   } catch (error) {
     res.status(500).json({ type: error.name, massage: error.massage });
   }
-};
+ } 
+
+ 
+ exports.dropSlots = async(req,res) =>{
+  const {id} = req.query;
+  try {
+    const dropped =  await TimeSlots.destroy({where:{id}})
+    res.status(200).json(dropped)
+  } catch (error) {
+    res.status(500).json({ type: error.name, massage: error.massage });
+  }
+ }
+  
+    
+   
+ 
+
+
+   
+    
