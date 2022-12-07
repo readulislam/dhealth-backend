@@ -33,7 +33,7 @@ exports.getTimeSlots = async (req, res) => {
       console.log(day)
       const timeRange=(availability.dataValues[properDay])
       console.log('1')
-      if (!availability[properDay]==='Unavailable') {
+      if (!timeRange==='Unavailable') {
         console.log('1')
         const interval = 15
        
