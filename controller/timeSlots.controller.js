@@ -64,21 +64,22 @@ console.log(isAvailable)
     }
     const s = useTimeSlots('9.00','17.00')
     console.log(s)
-    
+
     // res.send({data:true})
        
-        const r = await TimeSlots.create({
+        const [u,created] = await TimeSlots.findOrCreate({
+          where:{doctorId,timeRange},
             slots:s.toString(),
             timeRange,
             weekday:properDay
         })
   
-        // if(created) {
-        //     res.status(200).json(created)
-        // }else{
-        //     res.status(200).json(time_slots)
-        // }
-      res.status(200).json({data:r})
+        if(created) {
+            res.status(200).json(created)
+        }else{
+            res.status(200).json(time_slots)
+        }
+     
      
   } catch (error) {
     res.status(500).json({ type: error.name, massage: error.massage });
