@@ -23,7 +23,7 @@ exports.getTimeSlots = async (req, res) => {
       case "wed":
         properDay = "wednesday";
         break;
-    case "thur":
+    case "thu":
       properDay = "thursday";
       break;
     case "fri":
