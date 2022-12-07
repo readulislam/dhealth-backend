@@ -21,10 +21,10 @@ exports.getTimeSlots = async (req, res) => {
 //         where: { doctorId },
 //       });
 //       if (!availability[day]==='Unavailable') {
-//         const interval = 15
+        const interval = 15
 //         const timeRange= availability[day]
 //         const [startTime, endTime] = availability[day]?.split('-');
-//         const slots = await useTimeSlots(startTime, endTime, interval)
+        const slots = await useTimeSlots('9.00', '12.00', interval)
 //         console.log(slots,'slots')
 //         const r = await TimeSlots.create({
 //             slots:{'slots':`${slots}`},
@@ -45,5 +45,5 @@ exports.getTimeSlots = async (req, res) => {
 //     res.status(500).json({ type: error.name, massage: error.massage });
 //   }
 
-res.send({success:true})
+res.send({success:slots})
 };
