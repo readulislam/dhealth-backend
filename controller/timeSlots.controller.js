@@ -32,7 +32,7 @@ console.log(isAvailable)
       });
       console.log(availability)
      
-    //   const timeRange=(availability.dataValues[properDay])
+      const timeRange=(availability.dataValues[properDay])
       
     //   const interval = 15
      
@@ -66,6 +66,7 @@ console.log(isAvailable)
     console.log(s)
     // res.send({data:true})
        const find = await TimeSlots.findOne({where:{weekday:properDay, timeRange}})
+       console.log(find)
        if(find){
         res.status(200).json(find)
        }else{
