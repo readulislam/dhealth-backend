@@ -68,8 +68,8 @@ console.log(isAvailable)
     // res.send({data:true})
        
         const [u,created] = await TimeSlots.findOrCreate({
-          where:{ weekday:properDay,timeRange},
-            slots:s.toString(),
+          where:{ weekday:properDay,timeRange,slots:s.toString(),},
+            
            
         })
   
