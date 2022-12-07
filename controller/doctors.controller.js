@@ -1,6 +1,6 @@
 const multer = require('multer')
 const path = require('path')
-const {Doctors} = require('../database')
+const {Doctors,Departments,Hospitals} = require('../database')
 exports.createDoctor = async(req,res) =>{
 
 try {
@@ -13,7 +13,11 @@ try {
 exports.getDoctors = async(req,res) =>{
 
 try {
-    const doctors = await  Doctors.findAll()
+    const doctors = await  Doctors.findAll({
+        include: [
+            { model: Departments, as: "department" },
+            { model: Hospitals, as: "hospital" },]
+    })
     res.status(200).json(doctors)
 } catch (error) {
     console.log(error)

@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class Doctors extends Model {
     /**
@@ -9,6 +10,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+    models.Doctors.belongsTo(models.Departments,{
+      foreignKey: 'department_id',
+      as:'department'
+    })
+    models.Doctors.belongsTo(models.Hospitals,{
+      foreignKey: 'hospital_id',
+      as:'hospital'
+    })
     }
   }
   Doctors.init(
