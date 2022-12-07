@@ -30,11 +30,11 @@ exports.getTimeSlots = async (req, res) => {
       const availability = await WeeklyAvailability.findOne({
         where: { doctorId },
       });
-      console.log(day)
+     
       const timeRange=(availability.dataValues[properDay])
-      console.log('1')
+      
     
-        console.log('1')
+       
         const interval = 15
        
         console.log(timeRange)
@@ -47,7 +47,7 @@ exports.getTimeSlots = async (req, res) => {
         //     timeRange,
         //     weekday:properDay
         // })
-    res.send({success:slots})
+   res.status(200).json(slots)
         // if(created) {
         //     res.status(200).json(created)
         // }else{
