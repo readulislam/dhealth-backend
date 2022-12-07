@@ -26,17 +26,17 @@ exports.getTimeSlots = async (req, res) => {
         const [startTime, endTime] = availability[day]?.split('-');
         const slots = await useTimeSlots(startTime, endTime, interval)
         console.log(slots,'slots')
-        const [time_slots, created] = await TimeSlots.findOrCreate({where:{timeRange,weekday:day},
+        const r = await TimeSlots.create({
             slots,
             timeRange,
             weekday:day
         })
-
-        if(created) {
-            res.status(200).json(created)
-        }else{
-            res.status(200).json(time_slots)
-        }
+res.send(r)
+        // if(created) {
+        //     res.status(200).json(created)
+        // }else{
+        //     res.status(200).json(time_slots)
+        // }
       }
     } else {
       res.status(200).json({ data: "Unavailable" });
