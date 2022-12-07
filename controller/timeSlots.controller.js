@@ -39,7 +39,8 @@ exports.getTimeSlots = async (req, res) => {
        
         console.log(timeRange)
         const [startTime, endTime] = availability[day]?.split('-');
-        const slots = await useTimeSlots(startTime, endTime, interval)
+        console.log(startTime, endTime)
+        const slots =  useTimeSlots(startTime, endTime, interval)
         console.log(slots,'slots')
         const r = await TimeSlots.create({
             slots:{'slots':`${slots}`},
