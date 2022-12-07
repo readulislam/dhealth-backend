@@ -9,7 +9,7 @@ exports.getTimeSlots = async (req, res) => {
   const dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
   const splitting = dateObject.toString()?.split(" ");
   const day = (splitting[0]).toLowerCase();
-    const properDay = ''
+    let properDay = ''
   switch (day) {
     case 'tue':
         properDay='tuesday'
