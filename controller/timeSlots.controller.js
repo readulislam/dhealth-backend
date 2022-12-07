@@ -33,7 +33,7 @@ exports.getTimeSlots = async (req, res) => {
       console.log(day)
       const timeRange=(availability.dataValues[properDay])
       console.log('1')
-      if (!timeRange==='Unavailable') {
+    
         console.log('1')
         const interval = 15
        
@@ -53,7 +53,7 @@ exports.getTimeSlots = async (req, res) => {
         // }else{
         //     res.status(200).json(time_slots)
         // }
-      }
+      
     } else {
       res.status(200).json({ data: "Unavailable" });
     }
