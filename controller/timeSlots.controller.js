@@ -21,7 +21,7 @@ exports.getTimeSlots = async (req, res) => {
         where: { doctorId },
       });
       console.log(day)
-      console.log(availability)
+      console.log(availability?.dataValues[day])
       console.log('1')
       if (!availability[day]==='Unavailable') {
         console.log('1')
