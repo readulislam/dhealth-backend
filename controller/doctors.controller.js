@@ -34,10 +34,10 @@ try {
 }
 
 exports.getDoctorByPhone = async(req,res) =>{
-    const {contactNo} = req.query
-    console.log(typeof contactNo)
+    // const {contactNo} = req.query
+    // console.log(typeof contactNo)
     try {
-        const doctor = await  Doctors.findOne({where:{contactNo}})
+        const doctor = await  Doctors.findOne({where:{contactNo:'+969828044375'}})
         res.status(200).json(doctor)
     } catch (error) {
         res.status(500).json({type:error.name, massage:error.massage})
