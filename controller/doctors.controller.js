@@ -34,7 +34,7 @@ try {
 }
 
 exports.getDoctorByPhone = async(req,res) =>{
-    // const {contactNo} = req.query
+    const {contactNo} = req.query
     const number = contactNo.toString()
     try {
         const doctor = await  Doctors.findOne({where:{contactNo:number}})
