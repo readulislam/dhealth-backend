@@ -34,10 +34,9 @@ try {
 }
 
 exports.getDoctorByPhone = async(req,res) =>{
-    const {contactNo} = req.query
-    const number = contactNo.toString()
+  
     try {
-        const doctor = await  Doctors.findOne({where:{contactNo:number}})
+        const doctor = await  Doctors.findOne({where:{contactNo:req.body.contactNo}})
         res.status(200).json(doctor)
     } catch (error) {
         res.status(500).json({type:error.name, massage:error.massage})
