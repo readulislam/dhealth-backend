@@ -25,6 +25,15 @@ exports.DoctorAppointmentList =async(req,res) =>{
         res.status(500).json({type:error.name, massage:error.massage})
     }
 }
+exports.DoctorAppointmentAll =async(req,res) =>{
+    const {doctorId} = req.query;
+    try {
+        const appointmentList = await Appointments.findAll({where: {doctorId}})
+        res.status(200).json(appointmentList)
+    } catch (error) {
+        res.status(500).json({type:error.name, massage:error.massage})
+    }
+}
 
 exports.patientAppointmentList =async(req,res) =>{
     const {patientId} = req.query;
