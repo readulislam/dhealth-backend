@@ -125,6 +125,7 @@ exports.updateSlot = async (req, res) => {
   let date = '08/12/2022';
   let timeRange ='9.00-17.00';
   let slotId = 1;
+  let weekday = 'thursday';
   try {
     const findSlots = await TimeSlote.findOne({
       where: { doctorId, date, timeRange,weekday },
