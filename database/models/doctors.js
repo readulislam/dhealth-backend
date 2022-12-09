@@ -14,9 +14,14 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'department_id',
       as:'department'
     })
+
     models.Doctors.belongsTo(models.Hospitals,{
       foreignKey: 'hospital_id',
       as:'hospital'
+    })
+    models.Doctors.hasOne(models.Appointments,{
+      foreignKey: 'doctor_id',
+      as:'doctor'
     })
     }
   }

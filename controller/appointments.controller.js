@@ -1,4 +1,4 @@
-const {Appointments} = require('../database');
+const {Appointments,Doctors,Patients} = require('../database');
 exports.addAppointment =async (req,res) =>{
     const {date, time,patientId} = req.body;
 try {
@@ -19,7 +19,12 @@ try {
 exports.DoctorAppointmentList =async(req,res) =>{
     const {doctorId,date} = req.query;
     try {
-        const appointmentList = await Appointments.findAll({where: {doctorId, date}})
+        const appointmentList = await Appointments.findAll({where: {doctorId, date},
+            include: [
+                { model: Doctors, as: "doctor" },
+                { model: Patients, as: "patient" },
+              ],
+        })
         res.status(200).json(appointmentList)
     } catch (error) {
         res.status(500).json({type:error.name, massage:error.massage})
@@ -30,7 +35,12 @@ exports.DoctorAppointmentAll =async(req,res) =>{
     console.log(req.query)
     console.log(req.params)
     try {
-        const appointmentList = await Appointments.findAll({where: {doctorId}})
+        const appointmentList = await Appointments.findAll({where: {doctorId},
+            include: [
+                { model: Doctors, as: "doctor" },
+                { model: Patients, as: "patient" },
+              ],
+        })
         res.status(200).json(appointmentList)
     } catch (error) {
         res.status(500).json({type:error.name, massage:error.massage})
@@ -40,7 +50,12 @@ exports.DoctorAppointmentAll =async(req,res) =>{
 exports.patientAppointmentList =async(req,res) =>{
     const {patientId} = req.query;
     try {
-        const appointmentList = await Appointments.findAll({where: {patientId}})
+        const appointmentList = await Appointments.findAll({where: {patientId},
+            include: [
+                { model: Doctors, as: "doctor" },
+                { model: Patients, as: "patient" },
+              ],
+        })
         res.status(200).json(appointmentList)  
     } catch (error) {
         res.status(500).json({type:error.name, massage:error.massage})
