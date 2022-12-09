@@ -120,7 +120,11 @@ exports.dropSlots = async (req, res) => {
 };
 
 exports.updateSlot = async (req, res) => {
-  const { doctorId, date, timeRange, slotId } = req.query;
+  // const { doctorId, date, timeRange, slotId } = req.query;
+  let doctorId = 1;
+  let date = '08/12/2022';
+  let timeRange ='9.00-17.00';
+  let slotId = 1;
   try {
     const findSlots = await TimeSlote.findOne({
       where: { doctorId, date, timeRange,weekday },
