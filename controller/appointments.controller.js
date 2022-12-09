@@ -27,6 +27,8 @@ exports.DoctorAppointmentList =async(req,res) =>{
 }
 exports.DoctorAppointmentAll =async(req,res) =>{
     const {doctorId} = req.query;
+    console.log(req.query)
+    console.log(req.params)
     try {
         const appointmentList = await Appointments.findAll({where: {doctorId}})
         res.status(200).json(appointmentList)
