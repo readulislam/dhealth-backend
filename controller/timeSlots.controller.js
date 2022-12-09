@@ -144,9 +144,12 @@ exports.updateSlot = async (req, res) => {
     });
     console.log(updateSlots,'updated slots');
     const updated = await TimeSlote.update({
+      slots: updateSlots,
+    },{
+     
       where: { doctorId, date, timeRange,weekday },
 
-      slots: updateSlots,
+      
     });
     console.log(updated,'update done')
     res.status(200).json(updated);
