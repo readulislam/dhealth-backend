@@ -1,4 +1,4 @@
-const { DateOverride, WeeklyAvailability, TimeSlot } = require("../database");
+const { DateOverride, WeeklyAvailability, TimeSlote } = require("../database");
 const moment = require("moment");
 
 
@@ -78,18 +78,19 @@ console.log(properDay)
       return timeStops;
     };
     const slots = useTimeSlots(startTime, endTime);
-    const find = await TimeSlot.findOne({
+    const find = await TimeSlote.findOne({
       where: { weekday: properDay, timeRange,doctorId },
     });
     if (find) {
       res.status(200).json(find);
   
     }else {
-      const data = await TimeSlot.create({
+      const data = await TimeSlote.create({
         doctorId,
         slots: (slots),
         timeRange,
         weekday: properDay,
+        date,
       });
       res.status(200).json( data);
     }
@@ -107,7 +108,7 @@ console.log(properDay)
 
  exports.getAllslots = async(req,res)=>{
   try {
-    const slots = await TimeSlot.findAll();
+    const slots = await TimeSlote.findAll();
     res.status(200).json(slots)
   } catch (error) {
     res.status(500).json({ type: error.name, massage: error.massage });
@@ -118,7 +119,7 @@ console.log(properDay)
  exports.dropSlots = async(req,res) =>{
   const {id} = req.query;
   try {
-    const dropped =  await TimeSlot.destroy({where:{id}})
+    const dropped =  await TimeSlote.destroy({where:{id}})
     res.status(200).json(dropped)
   } catch (error) {
     res.status(500).json({ type: error.name, massage: error.massage });
