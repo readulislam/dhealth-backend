@@ -135,9 +135,11 @@ exports.updateSlot = async (req, res) => {
     const  slots = findSlots.dataValues['slots'];
     console.log(slots)
     const updateSlots = slots.map((slot) => {
+      console.log(slot,'1')
       if (slot.id === slotId) {
         slot.isAvailable = false;
       }
+      console.log(slot,'2')
     });
     console.log(updateSlots,'updated slots');
     const updated = await TimeSlote.update({
