@@ -120,7 +120,7 @@ exports.dropSlots = async (req, res) => {
 };
 
 exports.updateSlot = async (req, res) => {
-  const { doctorId, date, timeRange, slotId,weekday } = req.query;
+  const { doctorId, date, timeRange, slotId,weekday } = req.body;
   // let doctorId = 6;
   // let date = '08/12/2022';
   // let timeRange ='9.00-17.00';
