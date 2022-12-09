@@ -131,8 +131,8 @@ exports.updateSlot = async (req, res) => {
       where: { doctorId, date, timeRange,weekday },
     });
     console.log(findSlots,'find exit slots')
-   if(findSlots.TimeSlote){
-    const  slots = findSlots.TimeSlote.dataValues.slots;
+   if(findSlots){
+    const  slots = findSlots.dataValues['slots'];
     console.log(slots)
     const updateSlots = slots.map((slot) => {
       if (slot.id === slotId) {
