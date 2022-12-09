@@ -132,7 +132,7 @@ exports.updateSlot = async (req, res) => {
     });
     console.log(findSlots,'find exit slots')
    if(findSlots){
-    const {  slots, } = findSlots;
+    const {  slots } = findSlots?.TimeSlote.dataValues;
     const updateSlots = slots.map((slot) => {
       if (slot.id === slotId) {
         slot.isAvailable = false;
