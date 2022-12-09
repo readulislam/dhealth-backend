@@ -14,6 +14,7 @@ const dataOverrideRoute = require('./dateOverride.routes');
 const weeklyAvailabilityRoute = require('./weeklyAvailability.routes');
 
 const slotsRoute = require('./timeSlots.routes');
+const appointmentRoute = require('./appointment.routes');
 
 const appRouter = express.Router()
 
@@ -27,6 +28,7 @@ appRouter.use(departmentsRoute);
 appRouter.use(eventsRoute);
 appRouter.use(dataOverrideRoute);
 appRouter.use(weeklyAvailabilityRoute);
+appRouter.use(appointmentRoute);
 
 
 
