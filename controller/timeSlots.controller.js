@@ -138,6 +138,7 @@ exports.updateSlot = async (req, res) => {
       
       if (slot.id === slotId) {
         slot.isAvailable = false;
+        return slot;
       }
       return slot;
     });
