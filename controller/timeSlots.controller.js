@@ -79,7 +79,7 @@ console.log(properDay)
     };
     const slots = useTimeSlots(startTime, endTime);
     const find = await TimeSlote.findOne({
-      where: { weekday: properDay, timeRange,doctorId },
+      where: { weekday: properDay, timeRange,doctorId,date },
     });
     if (find) {
       res.status(200).json(find);
