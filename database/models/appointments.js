@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       models.Appointments.belongsTo(models.Patients,{
         foreignKey: 'patient_id',
         as:'patient'
-      })
+      })  
     }
   }
   Appointments.init({
