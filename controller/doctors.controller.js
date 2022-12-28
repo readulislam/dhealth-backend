@@ -10,8 +10,11 @@ exports.createDoctor = async (req, res) => {
   }
 };
 exports.getDoctors = async (req, res) => {
-  try {
+  const {offset, limit} = req.body
+    try {
     const doctors = await Doctors.findAll({
+      limit: limit,
+      offset: (offset - 1) * limit,
       include: [
         { model: Departments, as: "department" },
         { model: Hospitals, as: "hospital" },
