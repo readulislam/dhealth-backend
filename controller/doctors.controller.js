@@ -10,7 +10,8 @@ exports.createDoctor = async (req, res) => {
   }
 };
 exports.getDoctors = async (req, res) => {
-  const {offset, limit} = req.body
+  const {offset, limit} = req.query
+  console.log(req.query)
     try {
     const doctors = await Doctors.findAll({
       limit: limit,
