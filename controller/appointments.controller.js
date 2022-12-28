@@ -35,7 +35,7 @@ exports.DoctorAppointmentAll =async(req,res) =>{
     console.log(req.query)
     console.log(req.params)
     try {
-        const appointmentList = await Appointments.findAll({where: {doctorId},
+        const appointmentList = await Appointments.findAndCountAll({where: {doctorId},
             limit: limit,
             offset: (offset - 1) * limit,
             include: [
