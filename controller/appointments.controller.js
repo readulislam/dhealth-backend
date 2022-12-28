@@ -31,11 +31,13 @@ exports.DoctorAppointmentList =async(req,res) =>{
     }
 }
 exports.DoctorAppointmentAll =async(req,res) =>{
-    const {doctorId} = req.query;
+    const {doctorId,offset, limit} = req.query;
     console.log(req.query)
     console.log(req.params)
     try {
         const appointmentList = await Appointments.findAll({where: {doctorId},
+            limit: limit,
+            offset: (offset - 1) * limit,
             include: [
                 { model: Doctors, as: "doctor" },
                 { model: Patients, as: "patient" },
