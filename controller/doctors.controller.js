@@ -13,7 +13,7 @@ exports.getDoctors = async (req, res) => {
   const {offset, limit} = req.query
   console.log(req.query)
     try {
-    const doctors = await Doctors.findAll({
+    const doctors = await Doctors.findAndCountAll({
       limit: limit,
       offset: (offset - 1) * limit,
       include: [
