@@ -20,18 +20,18 @@ const prescriptionRoute=require('./prescription.routes')
 
 const appRouter = express.Router()
 
-appRouter.use(slotsRoute)
+// appRouter.use(slotsRoute)
 appRouter.use(hospitalRoute);
 appRouter.use(statesRoute);
-appRouter.use(citiesRoutes);
-appRouter.use(patientsRoute);
-appRouter.use(doctorsRoute);
+// appRouter.use(citiesRoutes);
+// appRouter.use(patientsRoute);
+// appRouter.use(doctorsRoute);
 appRouter.use(departmentsRoute);
-appRouter.use(eventsRoute);
-appRouter.use(dataOverrideRoute);
-appRouter.use(weeklyAvailabilityRoute);
-appRouter.use(appointmentRoute);
-appRouter.use(prescriptionRoute)
+// appRouter.use(eventsRoute);
+// appRouter.use(dataOverrideRoute);
+// appRouter.use(weeklyAvailabilityRoute);
+// appRouter.use(appointmentRoute);
+// appRouter.use(prescriptionRoute)
 
 
 
