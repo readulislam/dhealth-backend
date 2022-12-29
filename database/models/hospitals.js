@@ -11,10 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.Hospitals.hasOne(models.Doctors,{
-        foreignKey: 'hospital_id',
-        as:'hospital'
-      })
+      // models.Hospitals.hasOne(models.Doctors,{
+      //   foreignKey: 'hospital_id',
+      //   as:'hospital'
+      // })
     }
   }
   Hospitals.init({
