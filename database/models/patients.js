@@ -6,10 +6,10 @@ module.exports = (sequelize, DataTypes) => {
   class Patients extends Model {
    
     static associate(models) {
-      // models.Patients.hasOne(models.Appointments,{
-      //   foreignKey: 'patient_id',
-      //   as:'patient'
-      // })
+      models.Patients.hasOne(models.Appointments,{
+        foreignKey: 'patient_id',
+        as:'patient'
+      })
     }
   }
   Patients.init({
