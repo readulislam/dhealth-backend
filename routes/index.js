@@ -29,7 +29,7 @@ appRouter.use(doctorsRoute);
 appRouter.use(departmentsRoute);
 appRouter.use(eventsRoute);
 // appRouter.use(dataOverrideRoute);
-// appRouter.use(weeklyAvailabilityRoute);
+appRouter.use(weeklyAvailabilityRoute);
 // appRouter.use(appointmentRoute);
 // appRouter.use(prescriptionRoute)
 
