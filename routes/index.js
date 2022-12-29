@@ -20,7 +20,7 @@ const prescriptionRoute=require('./prescription.routes')
 
 const appRouter = express.Router()
 
-// appRouter.use(slotsRoute)
+appRouter.use(slotsRoute)
 appRouter.use(hospitalRoute);
 appRouter.use(statesRoute);
 appRouter.use(citiesRoutes);
