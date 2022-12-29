@@ -3,7 +3,9 @@ const path = require("path");
 const { Doctors, Departments, Hospitals } = require("../database");
 exports.createDoctor = async (req, res) => {
   try {
-    const doctor = await Doctors.create({ ...req.body });
+    // const doctor = await Doctors.create({ ...req.body });
+
+    const doctor = await Doctors.bulkCreate({ ...req.body });
     res.status(200).json(doctor);
   } catch (error) {
     res.status(500).json({ type: error.name, massage: error.massage });

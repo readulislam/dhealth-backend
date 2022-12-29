@@ -25,7 +25,7 @@ appRouter.use(hospitalRoute);
 appRouter.use(statesRoute);
 appRouter.use(citiesRoutes);
 // appRouter.use(patientsRoute);
-// appRouter.use(doctorsRoute);
+appRouter.use(doctorsRoute);
 appRouter.use(departmentsRoute);
 // appRouter.use(eventsRoute);
 // appRouter.use(dataOverrideRoute);
