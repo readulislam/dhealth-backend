@@ -11,14 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.Appointments.belongsTo(models.Doctors,{
-        foreignKey: 'doctor_id',
-        as:'doctor'
-      })
-      models.Appointments.belongsTo(models.Patients,{
-        foreignKey: 'patient_id',
-        as:'patient'
-      })  
+      // models.Appointments.belongsTo(models.Doctors,{
+      //   foreignKey: 'doctor_id',
+      //   as:'doctor'
+      // })
+      // models.Appointments.belongsTo(models.Patients,{
+      //   foreignKey: 'patient_id',
+      //   as:'patient'
+      // })  
     }
   }
   Appointments.init({
@@ -48,6 +48,7 @@ module.exports = (sequelize, DataTypes) => {
     requestedByEmail: DataTypes.STRING,
     requestedByPhone:DataTypes.STRING,
     date: DataTypes.STRING
+
   }, {
     sequelize,
     modelName: 'Appointments',
