@@ -19,3 +19,13 @@ exports.getPrescriptionByPatientId = async (req, res) => {
     res.status(500).json({type:error.name, massage:error.massage})
   }
 };
+exports.getPrescriptionByDoctorId = async (req, res) => {
+  console.log(req.body)
+  const {doctorId} = req.query;
+try {
+  const getPrescription = await Prescription.findAll({where:{doctorId}});
+  res.status(200).json(getPrescription)
+} catch (error) {
+  res.status(500).json({type:error.name, massage:error.massage})
+}
+};
