@@ -31,11 +31,12 @@ exports.DoctorAppointmentList =async(req,res) =>{
     }
 }
 exports.DoctorAppointmentAll =async(req,res) =>{
-    const {doctorId} = req.query;
-    console.log(req.query)
-    console.log(req.params)
+    const {doctorId,offset, limit} = req.query;
+  //hhhhhhhhhh
     try {
-        const appointmentList = await Appointments.findAll({where: {doctorId},
+        const appointmentList = await Appointments.findAndCountAll({where: {doctorId},
+            limit: limit,
+            offset: (offset - 1) * limit,
             include: [
                 { model: Doctors, as: "doctor" },
                 { model: Patients, as: "patient" },
@@ -46,11 +47,13 @@ exports.DoctorAppointmentAll =async(req,res) =>{
         res.status(500).json({type:error.name, massage:error.massage})
     }
 }
-
+//kkkkk
 exports.patientAppointmentList =async(req,res) =>{
-    const {patientId} = req.query;
+    const {patientId,limit,offset} = req.query;
     try {
-        const appointmentList = await Appointments.findAll({where: {patientId},
+        const appointmentList = await Appointments.findAndCountAll({where: {patientId},
+            limit: limit,
+            offset: (offset - 1) * limit,
             include: [
                 { model: Doctors, as: "doctor" },
                 { model: Patients, as: "patient" },

@@ -31,7 +31,7 @@ appRouter.use(eventsRoute);
 appRouter.use(dataOverrideRoute);
 appRouter.use(weeklyAvailabilityRoute);
 appRouter.use(appointmentRoute);
-appRouter.use(prescriptionRoute)
+// appRouter.use(prescriptionRoute)
 
 
 

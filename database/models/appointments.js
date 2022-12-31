@@ -48,6 +48,7 @@ module.exports = (sequelize, DataTypes) => {
     requestedByEmail: DataTypes.STRING,
     requestedByPhone:DataTypes.STRING,
     date: DataTypes.STRING
+
   }, {
     sequelize,
     modelName: 'Appointments',

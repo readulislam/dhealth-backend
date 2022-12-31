@@ -3,15 +3,21 @@ const path = require("path");
 const { Doctors, Departments, Hospitals } = require("../database");
 exports.createDoctor = async (req, res) => {
   try {
-    const doctor = await Doctors.create({ ...req.body });
+    // const doctor = await Doctors.create({ ...req.body });
+
+    const doctor = await Doctors.bulkCreate(req.body);
     res.status(200).json(doctor);
   } catch (error) {
     res.status(500).json({ type: error.name, massage: error.massage });
   }
 };
 exports.getDoctors = async (req, res) => {
-  try {
-    const doctors = await Doctors.findAll({
+  const {offset, limit} = req.query
+  console.log(req.query)
+    try {
+    const doctors = await Doctors.findAndCountAll({
+      limit: limit,
+      offset: (offset - 1) * limit,
       include: [
         { model: Departments, as: "department" },
         { model: Hospitals, as: "hospital" },

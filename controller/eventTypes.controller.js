@@ -2,7 +2,7 @@
 const {EventType} = require('../database')
 exports.createEvent=async(req,res)=>{
     try {
-        const event = await EventType.create(req.body);
+        const event = await EventType.bulkCreate(req.body);
         res.status(200).json(event)
     } catch (error) {
         res.status(500).json({type:error.name, massage:error.massage})
