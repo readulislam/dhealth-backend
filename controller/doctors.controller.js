@@ -49,6 +49,41 @@ exports.getDoctorByPhone = async (req, res) => {
     res.status(500).json({ type: error.name, massage: error.massage });
   }
 };
+exports.getDoctorBySearch = async (req, res) => {
+  console.log(req.query);
+  // console.log(typeof req.params)
+
+  try {
+    if(req.query.name){
+      if (req.query.Departments) {
+        if (req.query.Hospitals) {
+          
+        } else {
+          
+        }
+      } else {
+        
+      }
+      const doctor = await Doctors.findAll({
+        where: { name: req.query.name },
+        include: [
+          { model: Departments, as: "department" },
+          { model: Hospitals, as: "hospital" },
+        ],
+      });  
+    }
+    const doctor = await Doctors.findAll({
+      where: { contactNo: req.query.contactNo },
+      include: [
+        { model: Departments, as: "department" },
+        { model: Hospitals, as: "hospital" },
+      ],
+    });
+    res.status(200).json(doctor);
+  } catch (error) {
+    res.status(500).json({ type: error.name, massage: error.massage });
+  }
+};
 
 // upload Image file for doctors
 // const storage = multer.diskStorage({
