@@ -57,7 +57,7 @@ exports.getDoctorByPhone = async (req, res) => {
   }
 };
 exports.getDoctorBySearch = async (req, res) => {
-  const {textInput,locationInput,departmentInput}=(req.query);
+  const {textInput,locationInput,departmentInput, limit,offset}=(req.query);
 console.log(req.query)
   const doctors = await Doctors.findAndCountAll({
     where:{ [Op.or]: [
