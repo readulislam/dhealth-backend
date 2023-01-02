@@ -1,4 +1,5 @@
 const multer = require("multer");
+const { Op } = require("sequelize");
 const path = require("path");
 const { Doctors, Departments, Hospitals } = require("../database");
 exports.createDoctor = async (req, res) => {
@@ -56,7 +57,30 @@ exports.getDoctorByPhone = async (req, res) => {
   }
 };
 exports.getDoctorBySearch = async (req, res) => {
-  console.log(req.query);
+  const {textInput,locationInput,departmentInput}=(req.query);
+console.log(req.query)
+  const doctors = await Doctors.findAndCountAll({
+    where:{ [Op.or]: [
+      { name: textInput },
+      { hospitalId: parseInt(locationInput) },
+      { departmentId: parseInt(departmentInput) }
+    ]},
+    limit: limit,
+    offset: (offset - 1) * limit,
+    include: [
+      { model: Departments, as: "department" },
+      { model: Hospitals, as: "hospital" },
+    ],
+  });
+  res.status(200).json(doctors);
+
+
+
+
+
+
+
+
   // console.log(typeof req.params)
 
   // try {
