@@ -26,4 +26,3 @@ const useTimeSlots=(start, end, interval)=>{
 module.exports = useTimeSlots;
 
 
- 
