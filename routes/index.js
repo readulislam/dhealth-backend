@@ -16,7 +16,8 @@ const weeklyAvailabilityRoute = require('./weeklyAvailability.routes');
 const slotsRoute = require('./timeSlots.routes');
 const appointmentRoute = require('./appointment.routes');
 
-const prescriptionRoute=require('./prescription.routes')
+const prescriptionRoute=require('./prescription.routes');
+const testReportsRoute = require('./testReport.routes');
 
 const appRouter = express.Router()
 
@@ -32,7 +33,7 @@ appRouter.use(dataOverrideRoute);
 appRouter.use(weeklyAvailabilityRoute);
 appRouter.use(appointmentRoute);
 appRouter.use(prescriptionRoute)
-
+appRouter.use(testReportsRoute);
 
 
 module.exports = appRouter;

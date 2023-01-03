@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Prescription extends Model {
+  class TestReports extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,37 +11,38 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.Prescription.belongsTo(models.Patients,{
-        foreignKey: 'patient_id',
-        as:'patient'
-      })  
-      models.Prescription.belongsTo(models.Doctors,{
+      models.TestReports.belongsTo(models.Doctors,{
         foreignKey: 'doctor_id',
         as:'doctor'
       })
-      models.Prescription.belongsTo(models.Appointments,{
+      models.TestReports.belongsTo(models.Patients,{
+        foreignKey: 'patient_id',
+        as:'patient'
+      })  
+      models.TestReports.belongsTo(models.Appointments,{
         foreignKey: 'appointment_id',
         as:'appointment'
       })  
+      
     }
   }
-  Prescription.init({
-    patientId: {
-        type:DataTypes.INTEGER,
-        field:'patient_id',
-        references:{
-          model: {
-            tableName: 'patients'
-          },
-          key:'id'
-        }
-      },
+  TestReports.init({
     doctorId: {
       type:DataTypes.INTEGER,
       field:'doctor_id',
       references:{
         model:{
           tableName:'doctors'
+        },
+        key:'id'
+      }
+    },
+    patientId: {
+      type:DataTypes.INTEGER,
+      field:'patient_id',
+      references:{
+        model: {
+          tableName: 'patients'
         },
         key:'id'
       }
@@ -57,14 +58,13 @@ module.exports = (sequelize, DataTypes) => {
         }
       },
     link: DataTypes.STRING,
+    name: DataTypes.STRING,
     
+
   }, {
     sequelize,
-    modelName: 'Prescription',
-    tableName:'Prescription',
-    timestamps:true,
-    createdAt:false,
-    updatedAt:'updateTimeStamp'
+    modelName: 'TestReports',
+    tableName:'testreports'
   });
-  return Prescription;
+  return TestReports;
 };
