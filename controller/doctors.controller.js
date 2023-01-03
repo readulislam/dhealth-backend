@@ -1,4 +1,5 @@
 const multer = require("multer");
+const { Op } = require("sequelize");
 const path = require("path");
 const { Doctors, Departments, Hospitals } = require("../database");
 exports.createDoctor = async (req, res) => {
@@ -56,39 +57,62 @@ exports.getDoctorByPhone = async (req, res) => {
   }
 };
 exports.getDoctorBySearch = async (req, res) => {
-  console.log(req.query);
+  const {textInput,locationInput,departmentInput, limit,offset}=(req.query);
+console.log(req.query)
+  const doctors = await Doctors.findAndCountAll({
+    where:{ [Op.or]: [
+      { name: textInput },
+      { hospitalId: parseInt(locationInput) },
+      { departmentId: parseInt(departmentInput) }
+    ]},
+    limit: limit,
+    offset: (offset - 1) * limit,
+    include: [
+      { model: Departments, as: "department" },
+      { model: Hospitals, as: "hospital" },
+    ],
+  });
+  res.status(200).json(doctors);
+
+
+
+
+
+
+
+
   // console.log(typeof req.params)
 
-  try {
-    if(req.query.name){
-      if (req.query.Departments) {
-        if (req.query.Hospitals) {
+  // try {
+  //   if(req.query.name){
+  //     if (req.query.Departments) {
+  //       if (req.query.Hospitals) {
           
-        } else {
+  //       } else {
           
-        }
-      } else {
+  //       }
+  //     } else {
         
-      }
-      const doctor = await Doctors.findAll({
-        where: { name: req.query.name },
-        include: [
-          { model: Departments, as: "department" },
-          { model: Hospitals, as: "hospital" },
-        ],
-      });  
-    }
-    const doctor = await Doctors.findAll({
-      where: { contactNo: req.query.contactNo },
-      include: [
-        { model: Departments, as: "department" },
-        { model: Hospitals, as: "hospital" },
-      ],
-    });
-    res.status(200).json(doctor);
-  } catch (error) {
-    res.status(500).json({ type: error.name, massage: error.massage });
-  }
+  //     }
+  //     const doctor = await Doctors.findAll({
+  //       where: { name: req.query.name },
+  //       include: [
+  //         { model: Departments, as: "department" },
+  //         { model: Hospitals, as: "hospital" },
+  //       ],
+  //     });  
+  //   }
+  //   const doctor = await Doctors.findAll({
+  //     where: { contactNo: req.query.contactNo },
+  //     include: [
+  //       { model: Departments, as: "department" },
+  //       { model: Hospitals, as: "hospital" },
+  //     ],
+  //   });
+  //   res.status(200).json(doctor);
+  // } catch (error) {
+  //   res.status(500).json({ type: error.name, massage: error.massage });
+  // }
 };
 
 // upload Image file for doctors
