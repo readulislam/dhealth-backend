@@ -1,4 +1,6 @@
 const { TestReports } = require("../database");
+const multer = require('multer')
+const path = require('path')
 
 exports.createTestReport = async (req, res) => {
     console.log(req.body)
