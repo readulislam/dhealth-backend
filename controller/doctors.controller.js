@@ -95,7 +95,7 @@ exports.getDoctorBySearch = async (req, res) => {
     
     })
     res.status(200).json(doctors);
-    return;
+   
   } else if (textInput && !hospitalId && departmentId) {
     const doctors = await Doctors.findAndCountAll({
       where:{ [Op.and]: [
