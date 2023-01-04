@@ -57,6 +57,11 @@ exports.getDoctorByPhone = async (req, res) => {
   }
 };
 exports.getDoctorBySearch = async (req, res) => {
+ 
+
+  const { textInput, locationInput, departmentInput, limit, offset } =
+    req.query;
+  console.log(req.query);
   const common = {
     limit: limit,
     offset: (offset - 1) * limit,
@@ -65,11 +70,6 @@ exports.getDoctorBySearch = async (req, res) => {
       { model: Hospitals, as: "hospital" },
     ],
   };
-
-  const { textInput, locationInput, departmentInput, limit, offset } =
-    req.query;
-  console.log(req.query);
- 
 
   if (textInput && !locationInput && !departmentInput) {
       const doctors = await Doctors.findAndCountAll({
