@@ -63,7 +63,7 @@ exports.getDoctorBySearch = async (req, res) => {
     req.query;
   console.log(req.query);
   console.log(typeof locationInput)
-  const hospitalId = parseInt(locationInput);
+  const hospitalId = locationInput
   const departmentId = parseInt(departmentInput);
   const limitNumber = parseInt(limit);
   const offsetNumber = parseInt(offset);
