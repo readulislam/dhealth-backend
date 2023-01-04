@@ -63,8 +63,8 @@ exports.getDoctorBySearch = async (req, res) => {
     req.query;
   console.log(req.query);
   const common = {
-    limit: limit,
-    offset: (offset - 1) * limit,
+    limit: parseInt(limit),
+    offset: (parseInt(offset) - 1) * parseInt(limit),
     include: [
       { model: Departments, as: "department" },
       { model: Hospitals, as: "hospital" },
