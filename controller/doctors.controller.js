@@ -13,9 +13,9 @@ exports.createDoctor = async (req, res) => {
   }
 };
 exports.getDoctors = async (req, res) => {
-  const {offset, limit} = req.query
-  console.log(req.query)
-    try {
+  const { offset, limit } = req.query;
+  console.log(req.query);
+  try {
     const doctors = await Doctors.findAndCountAll({
       limit: limit,
       offset: (offset - 1) * limit,
@@ -57,63 +57,90 @@ exports.getDoctorByPhone = async (req, res) => {
   }
 };
 exports.getDoctorBySearch = async (req, res) => {
-  const {textInput,locationInput,departmentInput, limit,offset}=(req.query);
-console.log(req.query)
-  const doctors = await Doctors.findAndCountAll({
-    where:{ [Op.or]: [
-      { name: textInput },
-      { hospitalId: parseInt(locationInput) },
-      { departmentId: parseInt(departmentInput) }
-    ]},
+  const common = {
     limit: limit,
     offset: (offset - 1) * limit,
     include: [
       { model: Departments, as: "department" },
       { model: Hospitals, as: "hospital" },
     ],
-  });
-  res.status(200).json(doctors);
+  };
 
+  const { textInput, locationInput, departmentInput, limit, offset } =
+    req.query;
+  console.log(req.query);
+ 
 
+  if (textInput && !locationInput && !departmentInput) {
+      const doctors = await Doctors.findAndCountAll({
+        where:{name:textInput},
+    ...common
+      });
+      res.status(200).json(doctors);
+      return;
+  } else if (textInput && locationInput && !departmentInput) {
+     const doctors = await Doctors.findAndCountAll({
+    where:{ [Op.and]: [
+      { name: textInput },
+      { hospitalId: parseInt(locationInput) },
+    ]},
+    ...common
+    
+    })
+    res.status(200).json(doctors);
+    return;
+  } else if (textInput && !locationInput && departmentInput) {
+    const doctors = await Doctors.findAndCountAll({
+      where:{ [Op.and]: [
+        { name: textInput },
+        { departmentId: parseInt(departmentInput) },
+      ]},
+      ...common
+      
+      })
+      res.status(200).json(doctors);
 
+  } else if (!textInput && locationInput && departmentInput) {
+    const doctors = await Doctors.findAndCountAll({
+      where:{ [Op.and]: [
+        { departmentId: parseInt(departmentInput) },
+        { hospitalId: parseInt(locationInput) },
+      ]},
+      ...common
+      
+      })
+      res.status(200).json(doctors);
+  } else if (!textInput && locationInput && !departmentInput) {
+    const doctors = await Doctors.findAndCountAll({
+      where:{hospitalId: parseInt(locationInput) },
+      ...common
+      
+      })
+      res.status(200).json(doctors);
+  } else if (!textInput && !locationInput && departmentInput) {
+    const doctors = await Doctors.findAndCountAll({
+      where:{ departmentId:parseInt(departmentInput)},
+      ...common
+      
+      })
+      res.status(200).json(doctors);
+  }else if(textInput && locationInput && departmentInput) {
+    const doctors = await Doctors.findAndCountAll({
+      where:{ [Op.and]: [
+        { name: textInput },
+        { hospitalId: parseInt(locationInput) },
+        { departmentId: parseInt(departmentInput) },
+      ]},
+      ...common
+      
+      })
+      res.status(200).json(doctors);
+  }
 
-
-
-
-
-  // console.log(typeof req.params)
-
-  // try {
-  //   if(req.query.name){
-  //     if (req.query.Departments) {
-  //       if (req.query.Hospitals) {
-          
-  //       } else {
-          
-  //       }
-  //     } else {
-        
-  //     }
-  //     const doctor = await Doctors.findAll({
-  //       where: { name: req.query.name },
-  //       include: [
-  //         { model: Departments, as: "department" },
-  //         { model: Hospitals, as: "hospital" },
-  //       ],
-  //     });  
-  //   }
-  //   const doctor = await Doctors.findAll({
-  //     where: { contactNo: req.query.contactNo },
-  //     include: [
-  //       { model: Departments, as: "department" },
-  //       { model: Hospitals, as: "hospital" },
-  //     ],
-  //   });
-  //   res.status(200).json(doctor);
-  // } catch (error) {
-  //   res.status(500).json({ type: error.name, massage: error.massage });
-  // }
 };
+
+// jjjjjjjj
+ 
 
 // upload Image file for doctors
 // const storage = multer.diskStorage({
