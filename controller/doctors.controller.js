@@ -99,7 +99,7 @@ exports.getDoctorBySearch = async (req, res) => {
       
       })
       res.status(200).json(doctors);
-
+      return;
   } else if (!textInput && locationInput && departmentInput) {
     const doctors = await Doctors.findAndCountAll({
       where:{ [Op.and]: [
@@ -110,6 +110,7 @@ exports.getDoctorBySearch = async (req, res) => {
       
       })
       res.status(200).json(doctors);
+      return;
   } else if (!textInput && locationInput && !departmentInput) {
     const doctors = await Doctors.findAndCountAll({
       where:{hospitalId: parseInt(locationInput) },
@@ -117,6 +118,7 @@ exports.getDoctorBySearch = async (req, res) => {
       
       })
       res.status(200).json(doctors);
+      return;
   } else if (!textInput && !locationInput && departmentInput) {
     const doctors = await Doctors.findAndCountAll({
       where:{ departmentId:parseInt(departmentInput)},
@@ -124,6 +126,7 @@ exports.getDoctorBySearch = async (req, res) => {
       
       })
       res.status(200).json(doctors);
+      return;
   }else if(textInput && locationInput && departmentInput) {
     const doctors = await Doctors.findAndCountAll({
       where:{ [Op.and]: [
@@ -135,7 +138,10 @@ exports.getDoctorBySearch = async (req, res) => {
       
       })
       res.status(200).json(doctors);
+      return;
   }
+
+  return;
 
 };
 
