@@ -179,3 +179,13 @@ exports.getDoctorBySearch = async (req, res) => {
 //         callback(new Error('only .jpg, .png, .jpeg, .gif format allowed!'))
 //     }
 // })
+
+exports.updateFiled=async(req,res)=>{
+ try {
+  const doctors = await Doctors.addColumn('experience', { type: DataTypes.STRING })
+  res.status(200).json(doctors);
+ } catch (error) {
+  console.log(error);
+  
+ }
+}
