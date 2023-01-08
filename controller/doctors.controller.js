@@ -83,7 +83,7 @@ exports.getDoctorBySearch = async (req, res) => {
   };
   const doctors = await Doctors.findAndCountAll({
     where:{name:textInput},
-...common
+
   });
   res.status(200).json(doctors);
 
