@@ -2,8 +2,7 @@ const multer = require("multer");
 const { Op ,Sequelize, DataTypes} = require("sequelize");
 const path = require("path");
 
-const sequelize = new Sequelize();
-const queryInterface = sequelize.getQueryInterface();
+
 const { Doctors, Departments, Hospitals } = require("../database");
 exports.createDoctor = async (req, res) => {
   try {
@@ -185,7 +184,7 @@ exports.getDoctorBySearch = async (req, res) => {
 
 exports.updateFiled=async(req,res)=>{
  try {
-  const doctors = await queryInterface.addColumn('experience', { type: DataTypes.STRING })
+  const doctors = await Doctors.addColumn('experience', { type: DataTypes.STRING })
   res.status(200).json(doctors);
  } catch (error) {
   console.log(error);
