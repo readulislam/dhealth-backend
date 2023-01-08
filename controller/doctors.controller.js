@@ -81,80 +81,75 @@ exports.getDoctorBySearch = async (req, res) => {
       { model: Hospitals, as: "hospital" },
     ],
   };
-  const doctors = await Doctors.findAndCountAll({
-    ...common,
-    where:{name:textInput},
 
-  });
-  res.status(200).json(doctors);
 
-  // if (textInput && !locationInput && !departmentId) {
-  //     const doctors = await Doctors.findAndCountAll({
-  //       where:{name:textInput},
-  //   ...common
-  //     });
-  //     res.status(200).json(doctors);
-  //     return;
-  // } else if (textInput && hospitalId && !departmentId) {
-  //   console.log('du da')
-  //    const doctors = await Doctors.findAndCountAll({
-  //   where:{name: textInput, hospitalId},
-  //   ...common
+  if (textInput && !locationInput && !departmentId) {
+    const doctors = await Doctors.findAndCountAll({
+      ...common,
+      where:{name:textInput},
+  
+    });
+    res.status(200).json(doctors);
+  } else if (textInput && hospitalId && !departmentId) {
+    console.log('du da')
+     const doctors = await Doctors.findAndCountAll({
+    where:{name: textInput, hospitalId},
+    ...common
     
-  //   })
-  //   res.status(200).json(doctors);
+    })
+    res.status(200).json(doctors);
    
-  // } else if (textInput && !hospitalId && departmentId) {
-  //   const doctors = await Doctors.findAndCountAll({
-  //     where:{ [Op.and]: [
-  //       { name: textInput },
-  //       { departmentId },
-  //     ]},
-  //     ...common
+  } else if (textInput && !hospitalId && departmentId) {
+    const doctors = await Doctors.findAndCountAll({
+      where:{ [Op.and]: [
+        { name: textInput },
+        { departmentId },
+      ]},
+      ...common
       
-  //     })
-  //     res.status(200).json(doctors);
-  //     return;
-  // } else if (!textInput && locationInput && departmentId) {
-  //   const doctors = await Doctors.findAndCountAll({
-  //     where:{ [Op.and]: [
-  //       { departmentId, },
-  //       { hospitalId },
-  //     ]},
-  //     ...common
+      })
+      res.status(200).json(doctors);
+      return;
+  } else if (!textInput && locationInput && departmentId) {
+    const doctors = await Doctors.findAndCountAll({
+      where:{ [Op.and]: [
+        { departmentId, },
+        { hospitalId },
+      ]},
+      ...common
       
-  //     })
-  //     res.status(200).json(doctors);
-  //     return;
-  // } else if (!textInput && hospitalId && !departmentId) {
-  //   const doctors = await Doctors.findAndCountAll({
-  //     where:{hospitalId},
-  //     ...common
+      })
+      res.status(200).json(doctors);
+      return;
+  } else if (!textInput && hospitalId && !departmentId) {
+    const doctors = await Doctors.findAndCountAll({
+      where:{hospitalId},
+      ...common
       
-  //     })
-  //     res.status(200).json(doctors);
-  //     return;
-  // } else if (!textInput && !hospitalId && departmentId) {
-  //   const doctors = await Doctors.findAndCountAll({
-  //     where:{ departmentId},
-  //     ...common
+      })
+      res.status(200).json(doctors);
+      return;
+  } else if (!textInput && !hospitalId && departmentId) {
+    const doctors = await Doctors.findAndCountAll({
+      where:{ departmentId},
+      ...common
       
-  //     })
-  //     res.status(200).json(doctors);
-  //     return;
-  // }else if(textInput && hospitalId && departmentId) {
-  //   const doctors = await Doctors.findAndCountAll({
-  //     where:{ [Op.and]: [
-  //       { name: textInput },
-  //       { hospitalId},
-  //       { departmentId },
-  //     ]},
-  //     ...common
+      })
+      res.status(200).json(doctors);
+      return;
+  }else if(textInput && hospitalId && departmentId) {
+    const doctors = await Doctors.findAndCountAll({
+      where:{ [Op.and]: [
+        { name: textInput },
+        { hospitalId},
+        { departmentId },
+      ]},
+      ...common
       
-  //     })
-  //     res.status(200).json(doctors);
-  //     return;
-  // }
+      })
+      res.status(200).json(doctors);
+      return;
+  }
 
 
 
