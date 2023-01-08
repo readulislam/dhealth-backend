@@ -2,7 +2,7 @@ const multer = require("multer");
 const { Op ,Sequelize, DataTypes} = require("sequelize");
 const path = require("path");
 
-const sequelize = new Sequelize(Doctors);
+const sequelize = new Sequelize();
 const queryInterface = sequelize.getQueryInterface();
 const { Doctors, Departments, Hospitals } = require("../database");
 exports.createDoctor = async (req, res) => {
