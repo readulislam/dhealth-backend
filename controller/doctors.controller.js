@@ -151,7 +151,7 @@ exports.getDoctorBySearch = async (req, res) => {
       res.status(200).json(doctors);
       return;
   }else{
-    res.status(404).json({massage:'Not Found'});
+    res.status(200).json({massage:'Not Found'});
   }
 
 
