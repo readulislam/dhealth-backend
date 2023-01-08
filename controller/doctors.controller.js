@@ -1,5 +1,5 @@
 const multer = require("multer");
-const { Op } = require("sequelize");
+const { Op ,DataTypes} = require("sequelize");
 const path = require("path");
 const { Doctors, Departments, Hospitals } = require("../database");
 exports.createDoctor = async (req, res) => {
