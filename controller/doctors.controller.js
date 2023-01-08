@@ -82,6 +82,12 @@ exports.getDoctorBySearch = async (req, res) => {
     ],
   };
   const doctors = await Doctors.findAndCountAll({
+    limit:limitNumber,
+    offset: (offsetNumber - 1) *limitNumber,
+    include: [
+      { model: Departments, as: "department" },
+      { model: Hospitals, as: "hospital" },
+    ],
     where:{name:textInput},
 
   });
