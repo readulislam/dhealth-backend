@@ -1,6 +1,8 @@
 const multer = require("multer");
-const { Op } = require("sequelize");
+const { Op ,Sequelize, DataTypes} = require("sequelize");
 const path = require("path");
+
+
 const { Doctors, Departments, Hospitals } = require("../database");
 exports.createDoctor = async (req, res) => {
   try {
@@ -59,11 +61,11 @@ exports.getDoctorByPhone = async (req, res) => {
 exports.getDoctorBySearch = async (req, res) => {
  
 
-  const { textInput, locationInput, departmentInput, limit, offset } =
+  const { name, locationInput, departmentInput, limit, offset } =
     req.query;
   console.log(req.query);
   console.log(typeof locationInput)
-  const hospitalId = locationInput
+  const hospitalId = parseInt(locationInput)
   const departmentId = parseInt(departmentInput);
   const limitNumber = parseInt(limit);
   const offsetNumber = parseInt(offset);
@@ -72,34 +74,36 @@ exports.getDoctorBySearch = async (req, res) => {
   
   
   const common = {
-    limit:limitNumber,
-    offset: (offsetNumber - 1) *limitNumber,
+    limit:5,
+    offset: (1 - 1) *5,
     include: [
       { model: Departments, as: "department" },
       { model: Hospitals, as: "hospital" },
     ],
   };
 
-  if (textInput && !locationInput && !departmentId) {
-      const doctors = await Doctors.findAndCountAll({
-        where:{name:textInput},
-    ...common
-      });
-      res.status(200).json(doctors);
-      return;
-  } else if (textInput && hospitalId && !departmentId) {
-    console.log('du da')
+
+  if (name && !locationInput && !departmentId) {
+    const doctors = await Doctors.findAndCountAll({
+      ...common,
+      where:{name:name},
+  
+    });
+    res.status(200).json(doctors);
+  } else if (name && hospitalId && !departmentId) {
+    
      const doctors = await Doctors.findAndCountAll({
-    where:{name: textInput, hospitalId},
-    ...common
+      ...common,
+    where:{name: name, hospitalId}
+  
     
     })
     res.status(200).json(doctors);
    
-  } else if (textInput && !hospitalId && departmentId) {
+  } else if (name && !hospitalId && departmentId) {
     const doctors = await Doctors.findAndCountAll({
       where:{ [Op.and]: [
-        { name: textInput },
+        { name: name },
         { departmentId },
       ]},
       ...common
@@ -107,7 +111,7 @@ exports.getDoctorBySearch = async (req, res) => {
       })
       res.status(200).json(doctors);
       return;
-  } else if (!textInput && locationInput && departmentId) {
+  } else if (!name && locationInput && departmentId) {
     const doctors = await Doctors.findAndCountAll({
       where:{ [Op.and]: [
         { departmentId, },
@@ -118,7 +122,7 @@ exports.getDoctorBySearch = async (req, res) => {
       })
       res.status(200).json(doctors);
       return;
-  } else if (!textInput && hospitalId && !departmentId) {
+  } else if (!name && hospitalId && !departmentId) {
     const doctors = await Doctors.findAndCountAll({
       where:{hospitalId},
       ...common
@@ -126,7 +130,7 @@ exports.getDoctorBySearch = async (req, res) => {
       })
       res.status(200).json(doctors);
       return;
-  } else if (!textInput && !hospitalId && departmentId) {
+  } else if (!name && !hospitalId && departmentId) {
     const doctors = await Doctors.findAndCountAll({
       where:{ departmentId},
       ...common
@@ -134,10 +138,10 @@ exports.getDoctorBySearch = async (req, res) => {
       })
       res.status(200).json(doctors);
       return;
-  }else if(textInput && hospitalId && departmentId) {
+  }else if(name && hospitalId && departmentId) {
     const doctors = await Doctors.findAndCountAll({
       where:{ [Op.and]: [
-        { name: textInput },
+        { name: name },
         { hospitalId},
         { departmentId },
       ]},
@@ -146,9 +150,11 @@ exports.getDoctorBySearch = async (req, res) => {
       })
       res.status(200).json(doctors);
       return;
+  }else{
+    res.status(200).json({massage:'Not Found'});
   }
 
-  return;
+
 
 };
 
@@ -179,3 +185,13 @@ exports.getDoctorBySearch = async (req, res) => {
 //         callback(new Error('only .jpg, .png, .jpeg, .gif format allowed!'))
 //     }
 // })
+
+exports.updateFiled=async(req,res)=>{
+ try {
+  const doctors = await Doctors.addColumn('experience', { type: DataTypes.STRING })
+  res.status(200).json(doctors);
+ } catch (error) {
+  console.log(error);
+  
+ }
+}
