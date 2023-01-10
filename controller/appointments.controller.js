@@ -64,31 +64,26 @@ exports.patientAppointmentList =async(req,res) =>{
         res.status(500).json({type:error.name, massage:error.massage})
     }
 }
-exports.patientAppointmentUpdate =async(req,res) =>{
-    const {patientId,limit,offset} = req.query;
-    try {
-        const appointmentList = await Appointments.findAndCountAll({where: {patientId},
-            limit: limit,
-            offset: (offset - 1) * limit,
-            include: [
-                { model: Doctors, as: "doctor" },
-                { model: Patients, as: "patient" },
-              ],
-        })
-        res.status(200).json(appointmentList)  
-    } catch (error) {
-        res.status(500).json({type:error.name, massage:error.massage})
-    }
-}
+// exports.patientAppointmentUpdate =async(req,res) =>{
+//     const {patientId,limit,offset} = req.query;
+//     try {
+//         const appointmentList = await Appointments.findAndCountAll({where: {patientId},
+//             limit: limit,
+//             offset: (offset - 1) * limit,
+//             include: [
+//                 { model: Doctors, as: "doctor" },
+//                 { model: Patients, as: "patient" },
+//               ],
+//         })
+//         res.status(200).json(appointmentList)  
+//     } catch (error) {
+//         res.status(500).json({type:error.name, massage:error.massage})
+//     }
+// }
 exports.patientAppointmentComplete=async(req,res)=>{
     const {id} = req.query;
     try {
-        const appointmentList = await Appointments.update({status:true},{where: {id},
-            include: [
-                { model: Doctors, as: "doctor" },
-                { model: Patients, as: "patient" },
-              ],
-        })
+        const appointmentList = await Appointments.update({status:true},{where: {id}})
         res.status(200).json(appointmentList)  
     } catch (error) {
         res.status(500).json({type:error.name, massage:error.massage})
