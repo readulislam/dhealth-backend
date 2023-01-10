@@ -42,6 +42,7 @@ module.exports = (sequelize, DataTypes) => {
           key: "id",
         },
       },
+      experience:DataTypes.STRING,
       hospitalId: {
         type: DataTypes.INTEGER,
         field:'hospital_id',
