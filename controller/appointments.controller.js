@@ -49,9 +49,10 @@ exports.DoctorAppointmentAll =async(req,res) =>{
 }
 //kkkkk
 exports.patientAppointmentList =async(req,res) =>{
-    const {patientId,limit,offset} = req.query;
+    const {patientId,limit,offset,status} = req.query;
     try {
         const appointmentList = await Appointments.findAndCountAll({where: {patientId},
+            status,
             limit: limit,
             offset: (offset - 1) * limit,
             include: [
