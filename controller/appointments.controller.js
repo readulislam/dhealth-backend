@@ -80,3 +80,17 @@ exports.patientAppointmentUpdate =async(req,res) =>{
         res.status(500).json({type:error.name, massage:error.massage})
     }
 }
+exports.patientAppointmentComplete=async(req,res)=>{
+    const {id} = req.query;
+    try {
+        const appointmentList = await Appointments.update({status:true},{where: {id},
+            include: [
+                { model: Doctors, as: "doctor" },
+                { model: Patients, as: "patient" },
+              ],
+        })
+        res.status(200).json(appointmentList)  
+    } catch (error) {
+        res.status(500).json({type:error.name, massage:error.massage})
+    }
+}
