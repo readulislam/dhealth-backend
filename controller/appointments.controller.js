@@ -82,7 +82,7 @@ exports.patientAppointmentList =async(req,res) =>{
 //     }
 // }
 exports.patientAppointmentComplete=async(req,res)=>{
-    const id = req.query;
+    const {id} = req.query;
     try {
         const appointmentList = await Appointments.update({status:true},{where: {id}})
         res.status(200).json(appointmentList)  
