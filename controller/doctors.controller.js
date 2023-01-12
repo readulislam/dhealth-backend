@@ -67,15 +67,15 @@ exports.getDoctorBySearch = async (req, res) => {
   console.log(typeof locationInput)
   const hospitalId = parseInt(locationInput)
   const departmentId = parseInt(departmentInput);
-  const limitNumber = parseInt(limit);
-  const offsetNumber = parseInt(offset);
+  // const limitNumber = parseInt(limit);
+  // const offsetNumber = parseInt(offset);
   console.log(typeof hospitalId)
 
   
   
   const common = {
-    limit:limitNumber,
-    offset: (offsetNumber - 1) *limitNumber,
+    limit:limit,
+    offset: (offset - 1) *limit,
     include: [
       { model: Departments, as: "department" },
       { model: Hospitals, as: "hospital" },
