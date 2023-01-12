@@ -74,8 +74,8 @@ exports.getDoctorBySearch = async (req, res) => {
   
   
   const common = {
-    limit:5,
-    offset: (1 - 1) *5,
+    limit:limitNumber,
+    offset: (offsetNumber - 1) *limitNumber,
     include: [
       { model: Departments, as: "department" },
       { model: Hospitals, as: "hospital" },
