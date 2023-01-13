@@ -198,12 +198,12 @@ exports.getDoctorBySearch = async (req, res) => {
  
 
 
-// exports.updateFiled=async(req,res)=>{
-//  try {
-//   const doctors = await Doctors.addColumn('experience', { type: DataTypes.STRING })
-//   res.status(200).json(doctors);
-//  } catch (error) {
-//   console.log(error);
+exports.updateFiled=async(req,res)=>{
+ try {
+  const doctors = await Doctors.addColumn('experience', { type: DataTypes.STRING })
+  res.status(200).json(doctors);
+ } catch (error) {
+  console.log(error);
   
-//  }
-// }
+ }
+}

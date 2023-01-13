@@ -9,7 +9,7 @@ doctorsRoute.get('/get-doctors',  getDoctors)
 doctorsRoute.delete('/delete-doctor',  dropDoctor)
 doctorsRoute.get('/get-doctorByNumber',  getDoctorByPhone)
 doctorsRoute.get('/get-doctorFiltering',  getDoctorBySearch)
-// doctorsRoute.put('/update',  updateFiled)
+doctorsRoute.put('/update',  updateFiled)
 
 
 
