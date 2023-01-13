@@ -7,13 +7,49 @@ const { Doctors, Departments, Hospitals } = require("../database");
 exports.createDoctor = async (req, res) => {
   try {
     // const doctor = await Doctors.create({ ...req.body });
+    let info = {
+      img: req.file.path,
+      name: req.body.name,
+      contactNo: req.body.contactNo,
+      education: req.body.education,
+      designation: req.body.designation,
+      departmentId: req.body.departmentId,
+      experience: req.body.experience,
+      hospitalId: req.body.hospitalId,
+  }
 
-    const doctor = await Doctors.bulkCreate(req.body);
+    const doctor = await Doctors.bulkCreate(info);
     res.status(200).json(doctor);
   } catch (error) {
     res.status(500).json({ type: error.name, massage: error.massage });
   }
 };
+
+// upload Image file for doctors
+const storage = multer.diskStorage({
+    destination:(req,file, callback)=>{
+        callback(null,'Images')
+    },
+    filename:(req,file, callback)=>{
+        callback(null,  Date.now() + path.extname(file.originalname))
+    }
+})
+
+exports.upload = multer({
+    storage,
+    limits:100000,
+    fileFilter:(req, file, callback)=>{
+        const fileTypes = /jpg|png|jpeg|gif/
+        const fileMimeType = fileTypes.test(file.mimetype)
+        const extName = fileTypes.test(path.extname(file.originalname   ))
+
+        if(fileMimeType && extName){
+            return callback(null, true)
+        }
+        callback(new Error('only .jpg, .png, .jpeg, .gif format allowed!'))
+    }
+}).single('file')
+
 exports.getDoctors = async (req, res) => {
   const { offset, limit } = req.query;
   console.log(req.query);
@@ -64,7 +100,7 @@ exports.getDoctorBySearch = async (req, res) => {
   const { name, locationInput, departmentInput, limit, offset } =
     req.query;
   console.log(req.query);
-  console.log(typeof locationInput)
+  console.log(typeof departmentInput)
   const hospitalId = parseInt(locationInput)
   const departmentId = parseInt(departmentInput);
   const limitNumber = parseInt(limit);
@@ -161,37 +197,13 @@ exports.getDoctorBySearch = async (req, res) => {
 // jjjjjjjj
  
 
-// upload Image file for doctors
-// const storage = multer.diskStorage({
-//     destination:(req,file, callback)=>{
-//         callback(null,'Images')
-//     },
-//     filename:(req,file, callback)=>{
-//         callback(null,  Date.now() + path.extname(file.originalname))
-//     }
-// })
 
-// exports.upload = multer({
-//     storage,
-//     limits:100000,
-//     fileFilter:(req, file, callback)=>{
-//         const fileTypes = /jpg|png|jpeg|gif/
-//         const fileMimeType = fileTypes.test(file.mimetype)
-//         const extName = fileTypes.test(path.extname(file.originalname   ))
-
-//         if(fileMimeType && extName){
-//             return callback(null, true)
-//         }
-//         callback(new Error('only .jpg, .png, .jpeg, .gif format allowed!'))
-//     }
-// })
-
-exports.updateFiled=async(req,res)=>{
- try {
-  const doctors = await Doctors.addColumn('experience', { type: DataTypes.STRING })
-  res.status(200).json(doctors);
- } catch (error) {
-  console.log(error);
+// exports.updateFiled=async(req,res)=>{
+//  try {
+//   const doctors = await Doctors.addColumn('experience', { type: DataTypes.STRING })
+//   res.status(200).json(doctors);
+//  } catch (error) {
+//   console.log(error);
   
- }
-}
+//  }
+// }

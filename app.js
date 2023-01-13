@@ -11,7 +11,9 @@ require("dotenv").config();
 app.use(cors());
 app.use(express.json());
 app.use(appRouter);
-// app.use("/Images", express.static("./Images"));
+
+app.use("/PrescriptionImages", express.static("./PrescriptionImages"));
+app.use("/Images", express.static("./Images"));
 app.use('/uploadedFile', express.static('./uploadedFile'))
 
 app.get('/', (req,res)=>{
@@ -47,3 +49,4 @@ db.sequelize
 app.listen(port, () => {
   console.log(`server listening on port ${port}`.rainbow);
 });
+
