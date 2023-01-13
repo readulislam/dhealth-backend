@@ -1,4 +1,6 @@
 const { Prescription } = require("../database");
+const multer = require('multer')
+const path = require('path')
 
 exports.createPrescription = async (req, res) => {
     console.log(req.body)

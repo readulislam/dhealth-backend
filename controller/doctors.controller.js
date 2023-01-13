@@ -1,5 +1,5 @@
-const multer = require("multer");
 const { Op ,Sequelize, DataTypes} = require("sequelize");
+const multer = require("multer");
 const path = require("path");
 
 
