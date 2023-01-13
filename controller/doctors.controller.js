@@ -1,9 +1,12 @@
 const { Op ,Sequelize, DataTypes} = require("sequelize");
-const multer = require("multer");
-const path = require("path");
+
 
 
 const { Doctors, Departments, Hospitals } = require("../database");
+
+const multer = require("multer");
+const path = require("path");
+
 exports.createDoctor = async (req, res) => {
   try {
     // const doctor = await Doctors.create({ ...req.body });
@@ -37,7 +40,7 @@ const storage = multer.diskStorage({
 
 exports.upload = multer({
     storage,
-    limits:100000,
+    limits:{ fileSize: '1000000' },
     fileFilter:(req, file, callback)=>{
         const fileTypes = /jpg|png|jpeg|gif/
         const fileMimeType = fileTypes.test(file.mimetype)
