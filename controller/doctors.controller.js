@@ -104,11 +104,12 @@ exports.getDoctorBySearch = async (req, res) => {
     req.query;
   console.log(req.query);
   console.log(typeof departmentInput)
-  const hospitalId = parseInt(locationInput)
-  const departmentId = parseInt(departmentInput);
-  const limitNumber = parseInt(limit);
-  const offsetNumber = parseInt(offset);
+  const hospitalId =locationInput;
+  const departmentId =departmentInput;
+  const limitNumber =limit;
+  const offsetNumber =offset;
   console.log(typeof departmentId)
+  console.log(departmentId);
 
   
   
