@@ -43,7 +43,7 @@ exports.uploadPrescription = multer({
       callback(new Error('only .jpg, .png, .jpeg, .gif format allowed!'))
   }
 }).single('file')
-exports.getPrescriptionByPatientId = async (req, res) => {
+exports.getPrescription = async (req, res) => {
     console.log(req.body)
     const {patientId,doctorId,appointmentId} = req.query;
   try {
