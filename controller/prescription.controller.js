@@ -48,7 +48,7 @@ exports.getPrescription = async (req, res) => {
     console.log(req.body)
     const {patientId,doctorId,appointmentId} = req.query;
   try {
-    const getPrescription = await Prescription.findOne({where:{patientId,doctorId,appointmentId}});
+    const getPrescription = await Prescription.findOne({where:{patientId,doctorId,appointmentId}},{limits:1});
     res.status(200).json(getPrescription)
   } catch (error) {
     res.status(500).json({type:error.name, massage:error.massage})
