@@ -2,7 +2,7 @@ const {Disease} = require('../database')
 
 exports.createDisease = async(req,res) =>{
     try {
-    const addDisease = await   Disease.Create(req.body) ;
+    const addDisease = await   Disease.create(req.body) ;
     res.status(200).json(addDisease) 
     } catch (error) {
         res.status(500).json({type:error.name, massage:error.message})
