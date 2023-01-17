@@ -11,7 +11,7 @@ exports.createDisease = async(req,res) =>{
 exports.getDisease = async(req,res) =>{
     try {
     const getDisease = await   Disease.findAll() ;
-    res.status(200).json(getDeasease) 
+    res.status(200).json(getDisease) 
     } catch (error) {
         res.status(500).json({type:error.name, massage:error.message})
     }
