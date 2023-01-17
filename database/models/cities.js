@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         field:'state_id',
         references: {
           model: {
-            tableName: "states",
+            tableName: "states",  
           },
           key:'id'
         },

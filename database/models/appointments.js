@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const disease = require('./disease');
 module.exports = (sequelize, DataTypes) => {
   class Appointments extends Model {
     /**
@@ -47,7 +48,8 @@ module.exports = (sequelize, DataTypes) => {
     timeSlotId: DataTypes.INTEGER,
     requestedByEmail: DataTypes.STRING,
     requestedByPhone:DataTypes.STRING,
-    date: DataTypes.STRING
+    date: DataTypes.STRING,
+    disease:DataTypes.STRING,
 
   }, {
     sequelize,

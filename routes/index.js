@@ -18,6 +18,7 @@ const appointmentRoute = require('./appointment.routes');
 
 const prescriptionRoute=require('./prescription.routes');
 const testReportsRoute = require('./testReport.routes');
+const diseasesRoute = require('./disease.route');
 
 const appRouter = express.Router()
 
@@ -34,6 +35,7 @@ appRouter.use(weeklyAvailabilityRoute);
 appRouter.use(appointmentRoute);
 appRouter.use(prescriptionRoute)
 appRouter.use(testReportsRoute);
+appRouter.use(diseasesRoute);
 
 
 module.exports = appRouter;
