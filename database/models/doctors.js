@@ -32,6 +32,9 @@ module.exports = (sequelize, DataTypes) => {
       education: DataTypes.STRING,
       designation: DataTypes.STRING,
       img: DataTypes.STRING,
+      basicCharges: DataTypes.STRING,
+      followupCharges: DataTypes.STRING,
+      followupRange: DataTypes.STRING,
       departmentId: {
         field:'department_id',
         type: DataTypes.INTEGER,
