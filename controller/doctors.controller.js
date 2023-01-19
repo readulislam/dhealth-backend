@@ -197,7 +197,15 @@ exports.getDoctorBySearch = async (req, res) => {
 
 
 };
-
+exports.updateFollowupField=async(req,res)=>{
+  try {
+   const doctors = await Doctors.update('experience', { type: DataTypes.STRING })
+   res.status(200).json(doctors);
+  } catch (error) {
+   console.log(error);
+   
+  }
+ }
 // jjjjjjjj
  
 

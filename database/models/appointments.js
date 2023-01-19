@@ -20,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'patient_id',
         as:'patient'
       })  
+      models.Appointments.belongsTo(models.Disease,{
+        foreignKey: 'disease_id',
+        as:'disease'
+      })  
     }
   }
   Appointments.init({
@@ -39,6 +43,16 @@ module.exports = (sequelize, DataTypes) => {
       references:{
         model: {
           tableName: 'patients'
+        },
+        key:'id'
+      }
+    },
+    diseaseId: {
+      type:DataTypes.INTEGER,
+      field:'disease_id',
+      references:{
+        model: {
+          tableName: 'diseases'
         },
         key:'id'
       }
