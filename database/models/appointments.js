@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
     requestedByEmail: DataTypes.STRING,
     requestedByPhone:DataTypes.STRING,
     date: DataTypes.STRING,
-    // disease:DataTypes.STRING,
+    disease:DataTypes.STRING,
 
   }, {
     sequelize,

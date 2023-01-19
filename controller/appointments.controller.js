@@ -91,3 +91,13 @@ exports.patientAppointmentComplete=async(req,res)=>{
         res.status(500).json({type:error.name, massage:error.massage})
     }
 }
+exports.AppointmentDelete =async(req,res) =>{
+    const {id} = req.query;
+  //hhhhhhhhhh
+    try {
+        const appointmentList = await Appointments.destroy({where: {id}})
+        res.status(200).json(appointmentList)
+    } catch (error) {
+        res.status(500).json({type:error.name, massage:error.massage})
+    }
+}
