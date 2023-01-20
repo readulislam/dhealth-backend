@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         as:'patient'
       })  
       models.Appointments.belongsTo(models.Disease,{
-        foreignKey: 'disease_id',
+        foreignKey: 'disease_id ',
         as:'disease'
       })  
     }
@@ -63,7 +63,7 @@ module.exports = (sequelize, DataTypes) => {
     requestedByEmail: DataTypes.STRING,
     requestedByPhone:DataTypes.STRING,
     date: DataTypes.STRING,
-    disease:DataTypes.STRING,
+    diseaseName:DataTypes.STRING,
 
   }, {
     sequelize,
