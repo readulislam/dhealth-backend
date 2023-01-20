@@ -1,6 +1,8 @@
 const {Appointments,Doctors,Patients} = require('../database');
+
 exports.addAppointment =async (req,res) =>{
     const {date, time,patientId} = req.body;
+    console.log(req.body)
 try {
     const sameTimeAppointment = await Appointments.findOne({where:{date, time, patientId}})
     if(sameTimeAppointment){
