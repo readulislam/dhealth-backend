@@ -198,8 +198,9 @@ exports.getDoctorBySearch = async (req, res) => {
 
 };
 exports.updateFollowupField=async(req,res)=>{
+  const {id,experience,followupRange} = req.query;
   try {
-   const doctors = await Doctors.update('experience', { type: DataTypes.STRING })
+   const doctors = await Doctors.update({experience,followupRange},{where:{id}})
    res.status(200).json(doctors);
   } catch (error) {
    console.log(error);
