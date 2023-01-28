@@ -62,6 +62,7 @@ module.exports = (sequelize, DataTypes) => {
     timeSlotId: DataTypes.INTEGER,
     requestedByEmail: DataTypes.STRING,
     requestedByPhone:DataTypes.STRING,
+    appointmentType:DataTypes.STRING,
     date: DataTypes.STRING,
     diseaseName:DataTypes.STRING,
 
