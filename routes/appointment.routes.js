@@ -1,5 +1,5 @@
 const express = require('express');
-const { addAppointment, DoctorAppointmentList, patientAppointmentList, DoctorAppointmentAll, patientAppointmentComplete, AppointmentDelete } = require('../controller/appointments.controller');
+const { addAppointment, DoctorAppointmentList, patientAppointmentList, DoctorAppointmentAll, patientAppointmentComplete, AppointmentDelete, getDiseasesAppointment, getAppointmentByDisease } = require('../controller/appointments.controller');
 const appointmentRoute = express.Router()
 
 appointmentRoute.post('/add-appointment', addAppointment)
@@ -10,6 +10,8 @@ appointmentRoute.get('/get-doctorAppointmentAll', DoctorAppointmentAll)
 appointmentRoute.get('/patientAppointmentList', patientAppointmentList)
 appointmentRoute.put('/patientAppointmentComplete', patientAppointmentComplete)
 appointmentRoute.delete('/appointmentDelete',AppointmentDelete)
+appointmentRoute.get('/patient-diseases',getDiseasesAppointment)
+appointmentRoute.get('/appointmentByDisease',getAppointmentByDisease)
 
 
 

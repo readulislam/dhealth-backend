@@ -2,7 +2,7 @@ const { DateOverride, WeeklyAvailability, TimeSlote } = require("../database");
 const moment = require("moment");
 
 exports.getTimeSlots = async (req, res) => {
-  const { date, doctorId } = req.query;
+  const { date, doctorId } = req.body;
   //date format
   const dateParts = date.split("/");
   const dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
@@ -120,7 +120,7 @@ exports.dropSlots = async (req, res) => {
 };
 
 exports.updateSlot = async (req, res) => {
-  const { doctorId, date, timeRange, slotId,weekday } = req.body;
+  const { doctorId, date, timeRange, slotId,weekday,isAvailable } = req.body;
   // let doctorId = 6;
   // let date = '08/12/2022';
   // let timeRange ='9.00-17.00';
@@ -140,7 +140,7 @@ exports.updateSlot = async (req, res) => {
     const updateSlots = slots.map((slot) => {
       
       if (slot.id === slotId) {
-        slot.isAvailable = false;
+        slot.isAvailable = isAvailable;
         return slot;
       }
       return slot;
@@ -164,3 +164,16 @@ exports.updateSlot = async (req, res) => {
     res.status(500).json({ type: error.name, massage: error.massage });
   }
 };
+
+
+exports.getTimeSlot = async(req,res)=>{
+  const {date,doctorId} = req.query;
+  console.log(date,doctorId);
+  try {
+    const slot = await TimeSlote.findOne({where:{date, doctorId}})
+    res.status(200).json(slot);
+  } catch (error) {
+    res.status(500).json({ type: error.name, massage: error.massage });
+  }
+  
+}

@@ -103,3 +103,40 @@ exports.AppointmentDelete =async(req,res) =>{
         res.status(500).json({type:error.name, massage:error.massage})
     }
 }
+
+
+exports.getDiseasesAppointment = async(req, res) =>{
+    const {patientId} = req.query;
+   
+      try {
+          const diseasesList = await Appointments.findAll({ 
+            where:{patientId},
+          attributes: ['diseaseName' ],
+          group: ['diseaseName'],
+         
+    
+    });
+          res.status(200).json(diseasesList)
+      } catch (error) {
+          res.status(500).json({type:error.name, massage:error.massage})
+      }
+
+}
+
+
+exports.getAppointmentByDisease = async(req, res) =>{
+    const {patientId, diseaseName} = req.query;
+   
+    try {
+        const diseasesList = await Appointments.findAndCountAll({ 
+          where:{patientId,diseaseName},
+        
+        
+  
+  });
+        res.status(200).json(diseasesList)
+    } catch (error) {
+        res.status(500).json({type:error.name, massage:error.massage})
+    }
+
+}
