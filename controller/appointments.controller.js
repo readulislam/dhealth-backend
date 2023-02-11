@@ -147,7 +147,7 @@ exports.getAppointmentByDisease = async (req, res) => {
 
   try {
     const diseasesList = await Appointments.findAndCountAll({
-      where: { patientId, diseaseName ,status:false },
+      where: { patientId, diseaseName ,status:true },
       include: [
         { model: Doctors, as: "doctor" },
         { model: Patients, as: "patient" },
