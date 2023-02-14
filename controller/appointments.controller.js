@@ -4,6 +4,7 @@ const {
   Patients,
   Hospitals,
   Departments,
+  Disease,
 } = require("../database");
 
 exports.addAppointment = async (req, res) => {
@@ -14,11 +15,9 @@ exports.addAppointment = async (req, res) => {
       where: { date, time, patientId },
     });
     if (sameTimeAppointment) {
-      res
-        .status(200)
-        .json({
-          massage: "you couldn't add  appointment in same time and same date",
-        });
+      res.status(200).json({
+        massage: "you couldn't add  appointment in same time and same date",
+      });
     } else {
       const appointment = await Appointments.create(req.body);
       res.status(200).json(appointment);
@@ -74,8 +73,10 @@ exports.patientAppointmentList = async (req, res) => {
         {
           model: Doctors,
           as: "doctor",
-          include: [{ model: Hospitals, as: "hospital" },{ model: Departments, as: "department" }],
-        
+          include: [
+            { model: Hospitals, as: "hospital" },
+            { model: Departments, as: "department" },
+          ],
         },
         { model: Patients, as: "patient" },
       ],
@@ -126,12 +127,12 @@ exports.AppointmentDelete = async (req, res) => {
 };
 
 exports.getDiseasesAppointment = async (req, res) => {
-  const { patientId,  status } = req.query;
-  console.log(  status);
+  const { patientId, status } = req.query;
+  console.log(status);
 
   try {
     const diseasesList = await Appointments.findAll({
-      where: { patientId},
+      where: { patientId },
       attributes: ["diseaseName"],
       group: ["diseaseName"],
     });
@@ -142,18 +143,52 @@ exports.getDiseasesAppointment = async (req, res) => {
 };
 
 exports.getAppointmentByDisease = async (req, res) => {
-  const { patientId, diseaseName  } = req.query;
+  const { patientId, diseaseName } = req.query;
   console.log(diseaseName);
 
   try {
     const diseasesList = await Appointments.findAndCountAll({
-      where: { patientId, diseaseName ,status:true },
+      where: { patientId, diseaseName, status: true },
       include: [
         { model: Doctors, as: "doctor" },
         { model: Patients, as: "patient" },
       ],
     });
     res.status(200).json(diseasesList);
+  } catch (error) {
+    res.status(500).json({ type: error.name, massage: error.massage });
+  }
+};
+
+exports.updatePatientDisease = async (req, res) => {
+  const { diseaseName, departmentId,appointmentId } = req.body;
+ 
+  try {
+    const findDisease = await Disease.findOne({ where: { name:diseaseName, departmentId } });
+    console.log(findDisease,'find disease')
+    console.log(diseaseName,departmentId,appointmentId)
+   
+    if (!findDisease) {
+      const createDisease = await Disease.create({
+        name:diseaseName,
+        departmentId,
+        description: "",
+      });
+console.log(createDisease,'create disease')
+      const updateAppointment = await Appointments.update(
+        { diseaseId: createDisease.id, diseaseName: createDisease.name },
+        { where: {id:appointmentId} }
+      );
+      console.log(updateAppointment,'update appointment')
+      res.status(200).json(updateAppointment);
+    }else{
+      const updateAppointment = await Appointments.update(
+        { diseaseId: findDisease.id, diseaseName: findDisease.name },
+        { where: {id:appointmentId} }
+      );
+      res.status(200).json(updateAppointment);
+    }
+   
   } catch (error) {
     res.status(500).json({ type: error.name, massage: error.massage });
   }
