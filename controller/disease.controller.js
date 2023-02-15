@@ -17,3 +17,6 @@ exports.getDisease = async(req,res) =>{
         res.status(500).json({type:error.name, massage:error.message})
     }
 }
+// exports.updateDisease=async(req,res)=>{
+//     const {appointmentId,name,}=req.body;
+// }
