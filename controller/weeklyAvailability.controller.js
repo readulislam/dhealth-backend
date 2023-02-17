@@ -39,6 +39,8 @@ exports.getAvailabilityBydDate = async (req, res) => {
     res.status(500).json({ type: error.name, massage: error.massage });
   }
 };
+exports.setAvailabilityByDoctorId=async(req,res)=>{}
+
 
 
 exports.getAvailabilityByDoctorId= async (req, res) => {
