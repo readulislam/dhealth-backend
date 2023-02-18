@@ -1,9 +1,15 @@
-const { DateOverride, WeeklyAvailability, TimeSlote } = require("../database");
-const moment = require("moment");
+const {
+  DateOverride,
+  WeeklyAvailabilities,
+  TimeSlote,
+} = require("../database");
+
+const { useTimeSlots } = require("../utils/createTimeSlots");
 
 exports.getTimeSlots = async (req, res) => {
   const { date, doctorId } = req.body;
   //date format
+  console.log(date);
   const dateParts = date.split("/");
   const dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
   console.log(dateObject);
@@ -43,49 +49,36 @@ exports.getTimeSlots = async (req, res) => {
     const isAvailable = await DateOverride.findOne({
       where: { date, doctorId },
     });
+
     if (!isAvailable) {
-      const availability = await WeeklyAvailability.findOne({
-        where: { doctorId },
-      });
-      const timeRange = availability.dataValues[properDay];
-      if (timeRange === "Unavailable") {
+    const availability = await WeeklyAvailabilities.findOne({
+    where: { doctorId },
+    });
+    const daySchedule = availability.dataValues[properDay];
+    console.log(daySchedule)
+
+      if (daySchedule === "Unavailable") {
         res.status(200).json({ data: "Unavailable" });
       } else {
-        const [startTime, endTime] = timeRange?.split("-");
+        let timeSlots = [];
+        const data = daySchedule.map(({ startTime, endTime, id }) => {
+          const slots = useTimeSlots(startTime, endTime);
+          timeSlots = timeSlots.concat(slots);
 
-        const useTimeSlots = (start, end) => {
-          var startTime = moment(start, "HH:mm");
-          var endTime = moment(end, "HH:mm");
+          return;
+        });
 
-          if (endTime.isBefore(startTime)) {
-            endTime.add(1, "day");
-          }
-
-          var timeStops = [];
-          var id = 1;
-          while (startTime <= endTime) {
-            const timeObj = {
-              id,
-              time: new moment(startTime).format("HH:mm"),
-              isAvailable: true,
-            };
-            timeStops.push(timeObj);
-            startTime.add(15, "minutes");
-            id++;
-          }
-          return timeStops;
-        };
-        const slots = useTimeSlots(startTime, endTime);
+       
         const find = await TimeSlote.findOne({
-          where: { weekday: properDay, timeRange, doctorId, date },
+          where: { weekday: properDay,  doctorId, date },
         });
         if (find) {
           res.status(200).json(find);
         } else {
           const data = await TimeSlote.create({
             doctorId,
-            slots: slots,
-            timeRange,
+            slots: timeSlots,
+           
             weekday: properDay,
             date,
           });
@@ -120,60 +113,54 @@ exports.dropSlots = async (req, res) => {
 };
 
 exports.updateSlot = async (req, res) => {
-  const { doctorId, date, timeRange, slotId,weekday,isAvailable } = req.body;
+  const { doctorId, date,  slotId, weekday, isAvailable } = req.body;
   // let doctorId = 6;
   // let date = '08/12/2022';
   // let timeRange ='9.00-17.00';
   // let slotId = 1;
   // let weekday = 'thursday';
-  console.log(req.query,'q')
-  console.log(req.params,'p')
-  console.log(req.body,'b')
+ 
   try {
     const findSlots = await TimeSlote.findOne({
-      where: { doctorId, date, timeRange,weekday },
+      where: { doctorId, date,  weekday },
     });
-    console.log(findSlots,'find exit slots')
-   if(findSlots){
-    const  slots = findSlots.dataValues['slots'];
-    console.log(slots)
-    const updateSlots = slots.map((slot) => {
-      
-      if (slot.id === slotId) {
-        slot.isAvailable = isAvailable;
+    console.log(findSlots, "find exit slots");
+    if (findSlots) {
+      const slots = findSlots.dataValues["slots"];
+      console.log(slots);
+      const updateSlots = slots.map((slot) => {
+        if (slot.id === slotId) {
+          slot.isAvailable = isAvailable;
+          return slot;
+        }
         return slot;
-      }
-      return slot;
-    });
-    console.log(updateSlots,'updated slots');
-    const updated = await TimeSlote.update({
-      slots: updateSlots,
-    },{
-     
-      where: { doctorId, date, timeRange,weekday },
-
-      
-    });
-    console.log(updated,'update done')
-    res.status(200).json(updated);
-   }else{
-    res.status(200).json({massage:'something wrong'})
-   }
-   
+      });
+      console.log(updateSlots, "updated slots");
+      const updated = await TimeSlote.update(
+        {
+          slots: updateSlots,
+        },
+        {
+          where: { doctorId, date,  weekday },
+        }
+      );
+      console.log(updated, "update done");
+      res.status(200).json(updated);
+    } else {
+      res.status(200).json({ massage: "something wrong" });
+    }
   } catch (error) {
     res.status(500).json({ type: error.name, massage: error.massage });
   }
 };
 
-
-exports.getTimeSlot = async(req,res)=>{
-  const {date,doctorId} = req.query;
-  console.log(date,doctorId);
+exports.getTimeSlot = async (req, res) => {
+  const { date, doctorId } = req.query;
+  console.log(date, doctorId);
   try {
-    const slot = await TimeSlote.findOne({where:{date, doctorId}})
+    const slot = await TimeSlote.findOne({ where: { date, doctorId } });
     res.status(200).json(slot);
   } catch (error) {
     res.status(500).json({ type: error.name, massage: error.massage });
   }
-  
-}
+};

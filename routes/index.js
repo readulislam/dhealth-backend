@@ -11,7 +11,7 @@ const hospitalRoute = require('./hospitals.routes');
 const statesRoute = require('./states.routes');
 const eventsRoute = require('./eventTypes.routes');
 const dataOverrideRoute = require('./dateOverride.routes');
-const weeklyAvailabilityRoute = require('./weeklyAvailability.routes');
+const weeklyAvailabilityRoute = require('./weeklyAvailabilities.routes');
 
 const slotsRoute = require('./timeSlots.routes');
 const appointmentRoute = require('./appointment.routes');

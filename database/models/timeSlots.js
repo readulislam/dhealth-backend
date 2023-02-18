@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       weekday: DataTypes.STRING,
       slots: DataTypes.JSONB,
-      timeRange: DataTypes.STRING,
+     
       date: DataTypes.STRING
     },
     {
