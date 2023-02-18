@@ -41,6 +41,7 @@ exports.getAvailabilityBydDate = async (req, res) => {
 };
 
 
+
 exports.getAvailabilityByDoctorId= async (req, res) => {
     const {doctorId} = req.query
     try {

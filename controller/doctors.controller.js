@@ -1,6 +1,4 @@
-const { Op ,Sequelize, DataTypes} = require("sequelize");
-
-
+const { Op, Sequelize, DataTypes } = require("sequelize");
 
 const { Doctors, Departments, Hospitals } = require("../database");
 
@@ -19,7 +17,7 @@ exports.createDoctor = async (req, res) => {
       departmentId: req.body.departmentId,
       experience: req.body.experience,
       hospitalId: req.body.hospitalId,
-  }
+    };
 
     const doctor = await Doctors.bulkCreate(info);
     res.status(200).json(doctor);
@@ -30,28 +28,28 @@ exports.createDoctor = async (req, res) => {
 
 // upload Image file for doctors
 const storage = multer.diskStorage({
-    destination:(req,file, callback)=>{
-        callback(null,'Images')
-    },
-    filename:(req,file, callback)=>{
-        callback(null,  Date.now() + path.extname(file.originalname))
-    }
-})
+  destination: (req, file, callback) => {
+    callback(null, "Images");
+  },
+  filename: (req, file, callback) => {
+    callback(null, Date.now() + path.extname(file.originalname));
+  },
+});
 
 exports.upload = multer({
-    storage,
-    limits:{ fileSize: '1000000' },
-    fileFilter:(req, file, callback)=>{
-        const fileTypes = /jpg|png|jpeg|gif/
-        const fileMimeType = fileTypes.test(file.mimetype)
-        const extName = fileTypes.test(path.extname(file.originalname   ))
+  storage,
+  limits: { fileSize: "1000000" },
+  fileFilter: (req, file, callback) => {
+    const fileTypes = /jpg|png|jpeg|gif/;
+    const fileMimeType = fileTypes.test(file.mimetype);
+    const extName = fileTypes.test(path.extname(file.originalname));
 
-        if(fileMimeType && extName){
-            return callback(null, true)
-        }
-        callback(new Error('only .jpg, .png, .jpeg, .gif format allowed!'))
+    if (fileMimeType && extName) {
+      return callback(null, true);
     }
-}).single('file')
+    callback(new Error("only .jpg, .png, .jpeg, .gif format allowed!"));
+  },
+}).single("file");
 
 exports.getDoctors = async (req, res) => {
   const { offset, limit } = req.query;
@@ -98,125 +96,97 @@ exports.getDoctorByPhone = async (req, res) => {
   }
 };
 exports.getDoctorBySearch = async (req, res) => {
- 
-
-  const { name, locationInput, departmentInput, limit, offset } =
-    req.query;
+  const { name, locationInput, departmentInput, limit, offset } = req.query;
   console.log(req.query);
-  console.log(typeof departmentInput)
-  const hospitalId =locationInput;
-  const departmentId =departmentInput;
-  const limitNumber =limit;
-  const offsetNumber =offset;
-  console.log(typeof departmentId)
+  console.log(typeof departmentInput);
+  const hospitalId = locationInput;
+  const departmentId = departmentInput;
+  const limitNumber = limit;
+  const offsetNumber = offset;
+  console.log(typeof departmentId);
   console.log(departmentId);
 
-  
-  
   const common = {
-    limit:limitNumber,
-    offset: (offsetNumber - 1) *limitNumber,
+    limit: limitNumber,
+    offset: (offsetNumber - 1) * limitNumber,
     include: [
       { model: Departments, as: "department" },
       { model: Hospitals, as: "hospital" },
     ],
   };
 
-
   if (name && !locationInput && !departmentId) {
     const doctors = await Doctors.findAndCountAll({
       ...common,
-      where:{name:name},
-  
+      where: { name: name },
     });
     res.status(200).json(doctors);
   } else if (name && hospitalId && !departmentId) {
-    
-     const doctors = await Doctors.findAndCountAll({
+    const doctors = await Doctors.findAndCountAll({
       ...common,
-    where:{name: name, hospitalId}
-  
-    
-    })
+      where: { name: name, hospitalId },
+    });
     res.status(200).json(doctors);
-   
   } else if (name && !hospitalId && departmentId) {
     const doctors = await Doctors.findAndCountAll({
-      where:{ [Op.and]: [
-        { name: name },
-        { departmentId },
-      ]},
-      ...common
-      
-      })
-      res.status(200).json(doctors);
-      return;
+      where: { [Op.and]: [{ name: name }, { departmentId }] },
+      ...common,
+    });
+    res.status(200).json(doctors);
+    return;
   } else if (!name && locationInput && departmentId) {
     const doctors = await Doctors.findAndCountAll({
-      where:{ [Op.and]: [
-        { departmentId, },
-        { hospitalId },
-      ]},
-      ...common
-      
-      })
-      res.status(200).json(doctors);
-      return;
+      where: { [Op.and]: [{ departmentId }, { hospitalId }] },
+      ...common,
+    });
+    res.status(200).json(doctors);
+    return;
   } else if (!name && hospitalId && !departmentId) {
     const doctors = await Doctors.findAndCountAll({
-      where:{hospitalId},
-      ...common
-      
-      })
-      res.status(200).json(doctors);
-      return;
+      where: { hospitalId },
+      ...common,
+    });
+    res.status(200).json(doctors);
+    return;
   } else if (!name && !hospitalId && departmentId) {
     const doctors = await Doctors.findAndCountAll({
-      where:{ departmentId},
-      ...common
-      
-      })
-      res.status(200).json(doctors);
-      return;
-  }else if(name && hospitalId && departmentId) {
+      where: { departmentId },
+      ...common,
+    });
+    res.status(200).json(doctors);
+    return;
+  } else if (name && hospitalId && departmentId) {
     const doctors = await Doctors.findAndCountAll({
-      where:{ [Op.and]: [
-        { name: name },
-        { hospitalId},
-        { departmentId },
-      ]},
-      ...common
-      
-      })
-      res.status(200).json(doctors);
-      return;
-  }else{
-    res.status(200).json({massage:'Not Found'});
+      where: { [Op.and]: [{ name: name }, { hospitalId }, { departmentId }] },
+      ...common,
+    });
+    res.status(200).json(doctors);
+    return;
+  } else {
+    res.status(200).json({ massage: "Not Found" });
   }
-
-
-
 };
-exports.updateFollowupField=async(req,res)=>{
-  const {id,experience,followupRange} = req.query;
+exports.updateFollowupField = async (req, res) => {
+  const { id, experience, followupRange } = req.query;
   try {
-   const doctors = await Doctors.update({experience,followupRange},{where:{id}})
-   res.status(200).json(doctors);
+    const doctors = await Doctors.update(
+      { experience, followupRange },
+      { where: { id } }
+    );
+    res.status(200).json(doctors);
   } catch (error) {
-   console.log(error);
-   
+    console.log(error);
   }
- }
+};
 // jjjjjjjj
- 
 
-
-exports.updateFiled=async(req,res)=>{
- try {
-  const doctors = await Doctors.addColumn('experience', { type: DataTypes.STRING })
-  res.status(200).json(doctors);
- } catch (error) {
-  console.log(error);
-  
- }
-}
+exports.updateFiled = async (req, res) => {
+  try {
+    const doctors = await Doctors.addColumn("experience", {
+      type: DataTypes.STRING,
+    });
+    res.status(200).json(doctors);
+  } catch (error) {
+    console.log(error);
+  }
+};
