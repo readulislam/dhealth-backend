@@ -56,19 +56,22 @@ exports.dropAvailability = async (req, res) => {
     res.status(200).json(dropped);
   } catch (error) {}
 };
-exports.UpdateAvailability = async (req, res) => {
-  const { doctorId, weekday, id, startTime, endTime } = req.body;
 
-  console.log(doctorId, weekday, id);
+exports.UpdateAvailability = async (req, res) => {
+  const { doctorId, weekday, id, startTime, endTime } = req.body.params;
+
+  console.log(doctorId, weekday, startTime, endTime);
   try {
     const find = await WeeklyAvailabilities.findOne({ where: { doctorId } });
 
-    if (find) {
-      const scheduleValue = find[weekday];
+    const scheduleValue = find[weekday];
+    if (scheduleValue) {
+      console.log("tik nain");
       const updatedValue = scheduleValue.map((value) => {
         if (parseInt(value.id) === parseInt(id)) {
           return { id: value.id, startTime: startTime, endTime: endTime };
         }
+
         return value;
       });
       const updatedSchedule = await WeeklyAvailabilities.update(
@@ -78,14 +81,38 @@ exports.UpdateAvailability = async (req, res) => {
 
       res.status(200).json(updatedSchedule);
     } else {
-      res.status(400).json({ massage: "Not Found Weekly Availability" });
+      const updatedSchedule = await WeeklyAvailabilities.update(
+        { [weekday]: [{ id, startTime, endTime }] },
+        { where: { doctorId } }
+      );
+      res.status(200).json(updatedSchedule);
     }
-  } catch (error) {}
+  } catch (error) {
+
+    res.status(500).json({ type: error.name, massage: error.massage });
+  }
 };
+exports.UpdateAvailabilityEmpty = async (req, res) => {
+  const { doctorId, weekday } = req.body;
+  console.log(req.body)
+
+  try {
+    const updatedSchedule = await WeeklyAvailabilities.update(
+      { [weekday]: ''},
+      { where: { doctorId } }
+    );
+    res.status(200).json(updatedSchedule);
+  } catch (error) {
+    res.status(500).json({ type: error.name, massage: error.massage });
+  }
+};
+
 exports.AllAvailability = async (req, res) => {
   const { doctorId } = req.query;
   try {
     const dropped = await WeeklyAvailabilities.findAll();
     res.status(200).json(dropped);
-  } catch (error) {}
+  } catch (error) {
+    res.status(500).json({ type: error.name, massage: error.massage });
+  }
 };

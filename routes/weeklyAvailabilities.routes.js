@@ -1,5 +1,5 @@
 const express = require('express');
-const { createOneTime, getAvailabilityBydDate, getAvailabilityByDoctorId, dropAvailability, AllAvailability, UpdateAvailability } = require('../controller/weeklyAvailabilities.controller');
+const { createOneTime, getAvailabilityBydDate, getAvailabilityByDoctorId, dropAvailability, AllAvailability, UpdateAvailability, UpdateAvailabilityEmpty } = require('../controller/weeklyAvailabilities.controller');
 const weeklyAvailabilityRoute = express.Router()
 
 
@@ -10,5 +10,6 @@ weeklyAvailabilityRoute.get('/get-weeklyAvailabilityByDoctorId', getAvailability
 
 weeklyAvailabilityRoute.delete('/delete-availability', dropAvailability)
 weeklyAvailabilityRoute.get('/all-availability',AllAvailability )
-weeklyAvailabilityRoute.get('/update-availability',UpdateAvailability )
+weeklyAvailabilityRoute.put('/update-availability',UpdateAvailability )
+weeklyAvailabilityRoute.put('/set-empty',UpdateAvailabilityEmpty )
 module.exports=weeklyAvailabilityRoute;
